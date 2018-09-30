@@ -1,5 +1,9 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
+import com.gk.snake.logic.Direction;
+import com.gk.snake.logic.GameState;
+import com.gk.snake.logic.Snake;
+import com.gk.snake.logic.SnakeDirectionCalculator;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import org.junit.Test;

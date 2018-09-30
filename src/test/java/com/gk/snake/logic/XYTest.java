@@ -1,6 +1,6 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
-import org.junit.Assert;
+import com.gk.snake.logic.XY;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

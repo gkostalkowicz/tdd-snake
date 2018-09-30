@@ -1,5 +1,9 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
+import com.gk.snake.logic.GameState;
+import com.gk.snake.logic.InitialStateCalculator;
+import com.gk.snake.logic.Snake;
+import com.gk.snake.logic.XY;
 import org.junit.Test;
 
 import java.util.ArrayList;

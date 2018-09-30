@@ -1,5 +1,6 @@
 package com.gk.snake;
 
+import com.gk.snake.logic.GameLogicProcessor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;

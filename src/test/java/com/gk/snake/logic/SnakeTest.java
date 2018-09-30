@@ -1,5 +1,7 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
+import com.gk.snake.logic.Direction;
+import com.gk.snake.logic.Snake;
 import org.junit.Test;
 
 import java.util.ArrayList;

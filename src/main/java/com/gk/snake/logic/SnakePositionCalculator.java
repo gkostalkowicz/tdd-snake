@@ -1,6 +1,5 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SnakePositionCalculator {

@@ -1,5 +1,8 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
+import com.gk.snake.logic.Direction;
+import com.gk.snake.logic.SnakePositionCalculator;
+import com.gk.snake.logic.XY;
 import org.junit.Test;
 
 import java.util.ArrayList;

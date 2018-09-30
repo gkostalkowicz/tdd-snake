@@ -1,13 +1,12 @@
-package com.gk.snake;
+package com.gk.snake.logic;
 
+import com.gk.snake.logic.*;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;

@@ -1,30 +1,26 @@
 package com.gk.snake;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 public class GameLogicProcessor {
 
     // TODO clean up
 
+    private final SnakeDirectionCalculator directionCalculator;
+    private final SnakePositionCalculator positionCalculator;
+
     // TODO remove
     private final int boardWidth;
     private final int boardHeight;
-    private GameState state;
-    private SnakeDirectionCalculator directionCalculator;
-    private SnakePositionCalculator positionCalculator;
 
-    public GameLogicProcessor(SnakeDirectionCalculator directionCalculator,
-                              SnakePositionCalculator positionCalculator, int boardWidth, int boardHeight,
-                              GameState state) {
-        this.directionCalculator = directionCalculator;
-        this.positionCalculator = positionCalculator;
-        this.boardWidth = boardWidth;
-        this.boardHeight = boardHeight;
-        this.state = state;
-    }
+    @Getter
+    private GameState state;
 
     public GameLogicProcessor(SnakeDirectionCalculator directionCalculator, SnakePositionCalculator positionCalculator,
                               int boardWidth, int boardHeight) {
@@ -47,9 +43,5 @@ public class GameLogicProcessor {
         }
         Snake snake = new Snake(snakeBody, Direction.LEFT);
         return new GameState(snake);
-    }
-
-    public GameState getState() {
-        return state;
     }
 }

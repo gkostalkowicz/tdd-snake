@@ -1,5 +1,8 @@
 package com.gk.snake;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class XY {
 
     private final int x;
@@ -8,11 +11,6 @@ public class XY {
     public XY(XY xy, int xDelta, int yDelta) {
         this.x = xy.x + xDelta;
         this.y = xy.y + yDelta;
-    }
-
-    public XY(int x, int y) {
-        this.x = x;
-        this.y = y;
     }
 
     @Override

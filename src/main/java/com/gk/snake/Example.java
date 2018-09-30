@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class Example {
 
+    // TODO remove
+
     public static void main(String[] args) throws IOException, InterruptedException {
         Screen screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();

@@ -19,9 +19,11 @@ public class SnakeGame {
     public static void main(String[] args) throws IOException {
         Screen screen = new DefaultTerminalFactory().createScreen();
         TerminalSize terminalSize = screen.getTerminalSize();
+        int boardHeight = terminalSize.getRows();
+        int boardWidth = terminalSize.getColumns();
         new SnakeGame(screen, new Timer(), new GameLogicProcessor(new SnakeDirectionCalculator(),
-                new SnakePositionCalculator(), terminalSize.getColumns(),
-                terminalSize.getRows())).start();
+                new SnakePositionCalculator(), boardWidth, boardHeight,
+                new InitialStateCalculator().getInitialState(boardWidth, boardHeight))).start();
     }
 
     public SnakeGame(Screen screen, Timer timer, GameLogicProcessor gameLogicProcessor) {

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SnakePositionCalculator {
 
-    public List<XY> moveSnakeByOneStep(Direction direction, List<XY> body) {
+    public List<XY> getNewPosition(Direction direction, List<XY> body) {
 
         // remove old tail
         body.remove(body.size() - 1);

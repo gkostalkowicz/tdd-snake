@@ -1,8 +1,10 @@
 package com.gk.snake.logic;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public class XY {
 
     private final int x;

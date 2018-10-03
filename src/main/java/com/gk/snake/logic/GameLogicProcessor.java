@@ -20,8 +20,10 @@ public class GameLogicProcessor {
     private GameState state;
 
     public void processNextFrame(KeyStroke keyStroke) {
+        // TODO refactor
+        // TODO generate apple
         Direction newDirection = directionCalculator.getNewDirection(state, keyStroke);
         List<XY> newBody = positionCalculator.getNewPosition(newDirection, state.getSnake().getBody());
-        state = new GameState(new Snake(newBody, newDirection));
+        state = new GameState(new Snake(newBody, newDirection), state.getApplePosition());
     }
 }

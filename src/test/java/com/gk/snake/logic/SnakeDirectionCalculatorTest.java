@@ -1,9 +1,5 @@
 package com.gk.snake.logic;
 
-import com.gk.snake.logic.Direction;
-import com.gk.snake.logic.GameState;
-import com.gk.snake.logic.Snake;
-import com.gk.snake.logic.SnakeDirectionCalculator;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import org.junit.Test;
@@ -67,6 +63,6 @@ public class SnakeDirectionCalculatorTest {
     }
 
     private Direction getNewDirection(Direction up, KeyStroke keyStroke) {
-        return directionCalculator.getNewDirection(new GameState(new Snake(new ArrayList<>(), up)), keyStroke);
+        return directionCalculator.getNewDirection(new GameState(new Snake(new ArrayList<>(), up), null), keyStroke);
     }
 }

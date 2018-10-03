@@ -6,4 +6,6 @@ import lombok.Data;
 public class GameState {
 
     private final Snake snake;
+
+    private final XY applePosition;
 }

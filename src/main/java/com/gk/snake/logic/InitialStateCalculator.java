@@ -12,6 +12,6 @@ public class InitialStateCalculator {
             snakeBody.add(new XY(headX + i, headY));
         }
         Snake snake = new Snake(snakeBody, Direction.LEFT);
-        return new GameState(snake);
+        return new GameState(snake, null);
     }
 }

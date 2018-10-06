@@ -1,6 +1,8 @@
 package com.gk.snake.logic;
 
-public class AppleGenerator {
+import com.googlecode.lanterna.input.KeyStroke;
+
+public class AppleGenerator implements GameRule {
 
     private final PositionGenerator positionGenerator;
 
@@ -8,7 +10,8 @@ public class AppleGenerator {
         this.positionGenerator = positionGenerator;
     }
 
-    public GameState calculateNextState(GameState state) {
+    @Override
+    public GameState calculateNextState(GameState state, KeyStroke keyStroke) {
         if (state.getApplePosition() != null) {
             return state;
         } else {

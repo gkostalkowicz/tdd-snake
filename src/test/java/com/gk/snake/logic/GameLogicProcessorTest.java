@@ -25,7 +25,7 @@ public class GameLogicProcessorTest {
         when(rule1.calculateNextState(state0, new KeyStroke(KeyType.ArrowLeft))).thenReturn(state1);
         when(rule2.calculateNextState(state1, new KeyStroke(KeyType.ArrowLeft))).thenReturn(state2);
 
-        GameLogicProcessor gameLogicProcessor = new GameLogicProcessor(Arrays.asList(rule1, rule2), 80, 25, state0);
+        GameLogicProcessor gameLogicProcessor = new GameLogicProcessor(Arrays.asList(rule1, rule2), state0);
 
         // when
         gameLogicProcessor.processNextFrame(new KeyStroke(KeyType.ArrowLeft));

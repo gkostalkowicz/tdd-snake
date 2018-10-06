@@ -18,7 +18,7 @@ public class AppleGeneratorTest {
         AppleGenerator appleGenerator = new AppleGenerator(positionGeneratorStub);
         GameState stateWithoutApple = new GameState(null, null);
 
-        GameState stateWithApple = appleGenerator.calculateNextState(stateWithoutApple);
+        GameState stateWithApple = appleGenerator.calculateNextState(stateWithoutApple, null);
 
         assertEquals(new XY(10, 20), stateWithApple.getApplePosition());
     }
@@ -30,7 +30,7 @@ public class AppleGeneratorTest {
         AppleGenerator appleGenerator = new AppleGenerator(positionGeneratorStub);
         GameState stateWithoutApple = new GameState(null, new XY(20, 30));
 
-        GameState stateWithApple = appleGenerator.calculateNextState(stateWithoutApple);
+        GameState stateWithApple = appleGenerator.calculateNextState(stateWithoutApple, null);
 
         assertEquals(new XY(20, 30), stateWithApple.getApplePosition());
     }

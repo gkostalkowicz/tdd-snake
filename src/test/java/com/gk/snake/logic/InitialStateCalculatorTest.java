@@ -1,14 +1,13 @@
 package com.gk.snake.logic;
 
-import com.gk.snake.logic.GameState;
-import com.gk.snake.logic.InitialStateCalculator;
-import com.gk.snake.logic.Snake;
-import com.gk.snake.logic.XY;
+import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.domain.Snake;
+import com.gk.snake.logic.domain.XY;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class InitialStateCalculatorTest {
 

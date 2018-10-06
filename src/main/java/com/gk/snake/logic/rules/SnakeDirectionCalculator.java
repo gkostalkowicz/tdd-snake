@@ -1,6 +1,9 @@
-package com.gk.snake.logic;
+package com.gk.snake.logic.rules;
 
 import com.gk.snake.KeyStroke;
+import com.gk.snake.logic.domain.Direction;
+import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.domain.Snake;
 
 import java.util.HashMap;
 import java.util.Map;

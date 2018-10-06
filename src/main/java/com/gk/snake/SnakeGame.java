@@ -1,6 +1,9 @@
 package com.gk.snake;
 
-import com.gk.snake.logic.*;
+import com.gk.snake.logic.GameLogicProcessor;
+import com.gk.snake.logic.InitialStateCalculator;
+import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.rules.*;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;

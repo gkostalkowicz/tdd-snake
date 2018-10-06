@@ -1,6 +1,8 @@
 package com.gk.snake.logic;
 
 import com.gk.snake.KeyStroke;
+import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.rules.GameRule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

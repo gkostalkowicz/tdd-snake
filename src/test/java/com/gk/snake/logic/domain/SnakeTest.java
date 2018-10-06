@@ -1,12 +1,10 @@
-package com.gk.snake.logic;
+package com.gk.snake.logic.domain;
 
-import com.gk.snake.logic.Direction;
-import com.gk.snake.logic.Snake;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 public class SnakeTest {
 

@@ -1,5 +1,10 @@
 package com.gk.snake.logic;
 
+import com.gk.snake.logic.domain.Direction;
+import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.domain.Snake;
+import com.gk.snake.logic.domain.XY;
+
 import java.util.ArrayList;
 
 public class InitialStateCalculator {

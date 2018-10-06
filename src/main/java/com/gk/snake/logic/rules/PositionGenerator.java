@@ -1,4 +1,6 @@
-package com.gk.snake.logic;
+package com.gk.snake.logic.rules;
+
+import com.gk.snake.logic.domain.XY;
 
 import java.util.Random;
 

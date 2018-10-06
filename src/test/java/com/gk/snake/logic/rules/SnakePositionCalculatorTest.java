@@ -1,5 +1,9 @@
-package com.gk.snake.logic;
+package com.gk.snake.logic.rules;
 
+import com.gk.snake.logic.domain.Direction;
+import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.domain.Snake;
+import com.gk.snake.logic.domain.XY;
 import org.junit.Test;
 
 import java.util.ArrayList;

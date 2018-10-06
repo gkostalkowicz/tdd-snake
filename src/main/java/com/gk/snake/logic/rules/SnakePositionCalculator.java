@@ -12,21 +12,28 @@ public class SnakePositionCalculator implements GameRule {
 
     @Override
     public GameState calculateNextState(GameState state, KeyStroke keyStroke) {
-        Snake snake = new Snake(getNewPosition(state.getSnake()), state.getSnake().getDirection());
-        return new GameState(snake, state.getApplePosition());
-    }
 
-    private List<XY> getNewPosition(Snake snake) {
-
-        Direction direction = snake.getDirection();
-        List<XY> body = snake.getBody();
-
-        // remove old tail
-        body.remove(body.size() - 1);
+        Direction direction = state.getSnake().getDirection();
+        List<XY> body = state.getSnake().getBody();
 
         // add new head
         body.add(0, new XY(body.get(0), direction.getXDelta(), direction.getYDelta()));
 
-        return body;
+        boolean snakeBodyOverlapsWithApple = snakeBodyOverlapsWithApple(body, state.getApplePosition());
+
+        // remove the apple if it has overlap with snake
+        XY newApplePosition = snakeBodyOverlapsWithApple ? null : state.getApplePosition();
+
+        // remove old tail
+        if (!snakeBodyOverlapsWithApple) {
+            body.remove(body.size() - 1);
+        }
+
+        return new GameState(new Snake(body, direction), newApplePosition);
+    }
+
+    private boolean snakeBodyOverlapsWithApple(List<XY> body, XY applePosition) {
+        return body.stream()
+                .anyMatch(bodyXy -> bodyXy.equals(applePosition));
     }
 }

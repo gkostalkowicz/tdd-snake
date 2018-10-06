@@ -2,14 +2,12 @@ package com.gk.snake.logic.rules;
 
 import com.gk.snake.KeyStroke;
 import com.gk.snake.logic.domain.GameState;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class AppleGenerator implements GameRule {
 
     private final PositionGenerator positionGenerator;
-
-    public AppleGenerator(PositionGenerator positionGenerator) {
-        this.positionGenerator = positionGenerator;
-    }
 
     @Override
     public GameState calculateNextState(GameState state, KeyStroke keyStroke) {

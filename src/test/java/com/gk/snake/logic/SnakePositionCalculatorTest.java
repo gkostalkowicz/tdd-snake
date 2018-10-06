@@ -1,27 +1,39 @@
 package com.gk.snake.logic;
 
-import com.gk.snake.logic.Direction;
-import com.gk.snake.logic.SnakePositionCalculator;
-import com.gk.snake.logic.XY;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SnakePositionCalculatorTest {
 
+    private SnakePositionCalculator positionCalculator = new SnakePositionCalculator();
+
     @Test
-    public void testNewPositionIsCalculated() {
+    public void gameStatePropertiesOtherThanBodyAreNotChanged() {
 
-        SnakePositionCalculator positionCalculator = new SnakePositionCalculator();
-        ArrayList<XY> body = new ArrayList<>();
-        body.add(new XY(9, 3));
-        body.add(new XY(10, 3));
-        body.add(new XY(11, 3));
+        GameState oldState = new GameState(new Snake(Arrays.asList(new XY(1, 2), new XY(1, 3)), Direction.LEFT), new XY(3, 4));
 
-        List<XY> newPosition = positionCalculator.getNewPosition(Direction.LEFT, body);
+        GameState newState = positionCalculator.calculateNextState(oldState, null);
+
+        assertEquals(Direction.LEFT, newState.getSnake().getDirection());
+        assertEquals(new XY(3, 4), newState.getApplePosition());
+    }
+
+    @Test
+    public void newPositionIsCalculated() {
+
+        ArrayList<XY> oldPosition = new ArrayList<>();
+        oldPosition.add(new XY(9, 3));
+        oldPosition.add(new XY(10, 3));
+        oldPosition.add(new XY(11, 3));
+        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), null);
+
+        GameState newState = positionCalculator.calculateNextState(oldState, null);
+        List<XY> newPosition = newState.getSnake().getBody();
 
         assertEquals(3, newPosition.size());
         assertEquals(new XY(8, 3), newPosition.get(0));

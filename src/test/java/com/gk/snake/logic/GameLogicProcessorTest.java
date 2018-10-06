@@ -4,39 +4,33 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameLogicProcessorTest {
 
-    private GameLogicProcessor gameLogicProcessor;
-
     @Test
-    public void testNewDirectionIsCalculated() {
+    public void gameStateIsProcessedByRules() {
 
-        SnakeDirectionCalculator directionCalculatorMock = mock(SnakeDirectionCalculator.class);
-        gameLogicProcessor = new GameLogicProcessor(directionCalculatorMock, mock(SnakePositionCalculator.class), 80, 25,
-                new InitialStateCalculator().getInitialState(80, 25));
+        GameState state0 = new GameState(new Snake(Collections.emptyList(), null), new XY(0, 0));
+        GameState state1 = new GameState(new Snake(Collections.emptyList(), null), new XY(0, 1));
+        GameState state2 = new GameState(new Snake(Collections.emptyList(), null), new XY(0, 2));
 
-        gameLogicProcessor.processNextFrame(new KeyStroke(KeyType.ArrowUp));
+        GameRule rule1 = mock(GameRule.class);
+        GameRule rule2 = mock(GameRule.class);
+        when(rule1.calculateNextState(state0, new KeyStroke(KeyType.ArrowLeft))).thenReturn(state1);
+        when(rule2.calculateNextState(state1, new KeyStroke(KeyType.ArrowLeft))).thenReturn(state2);
 
-        verify(directionCalculatorMock).getNewDirection(any(), eq(new KeyStroke(KeyType.ArrowUp)));
-    }
+        GameLogicProcessor gameLogicProcessor = new GameLogicProcessor(Arrays.asList(rule1, rule2), 80, 25, state0);
 
-    @Test
-    public void testNewPositionIsCalculated() {
+        // when
+        gameLogicProcessor.processNextFrame(new KeyStroke(KeyType.ArrowLeft));
 
-        SnakePositionCalculator positionCalculatorMock = mock(SnakePositionCalculator.class);
-        SnakeDirectionCalculator directionCalculatorStub = mock(SnakeDirectionCalculator.class);
-        when(directionCalculatorStub.getNewDirection(any(), any())).thenReturn(Direction.LEFT);
-        gameLogicProcessor = new GameLogicProcessor(directionCalculatorStub, positionCalculatorMock, 80, 25,
-                new GameState(new Snake(Collections.singletonList(new XY(1, 1)), null), null));
-
-        gameLogicProcessor.processNextFrame(null);
-
-        verify(positionCalculatorMock).getNewPosition(Direction.LEFT, Collections.singletonList(new XY(1, 1)));
+        // then
+        assertEquals(state2, gameLogicProcessor.getState());
     }
 }

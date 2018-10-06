@@ -11,6 +11,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class SnakeGame {
 
@@ -25,8 +26,8 @@ public class SnakeGame {
         TerminalSize terminalSize = screen.getTerminalSize();
         int boardHeight = terminalSize.getRows();
         int boardWidth = terminalSize.getColumns();
-        new SnakeGame(screen, new Timer(), new GameLogicProcessor(new SnakeDirectionCalculator(),
-                new SnakePositionCalculator(), boardWidth, boardHeight,
+        new SnakeGame(screen, new Timer(), new GameLogicProcessor(Arrays.asList(new SnakeDirectionCalculator(),
+                new SnakePositionCalculator()), boardWidth, boardHeight,
                 new InitialStateCalculator().getInitialState(boardWidth, boardHeight))).start();
     }
 
@@ -46,6 +47,7 @@ public class SnakeGame {
                 finished = true;
             } else {
                 if (keyStroke != null) {
+                    // TODO abstract key away from Lanterna
                     gameLogicProcessor.processNextFrame(keyStroke);
                 }
                 timer.waitOneFrame();

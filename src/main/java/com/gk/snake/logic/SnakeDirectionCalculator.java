@@ -6,7 +6,7 @@ import com.googlecode.lanterna.input.KeyType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SnakeDirectionCalculator {
+public class SnakeDirectionCalculator implements GameRule {
 
     private static Map<KeyType, Direction> keyTypeToDirection = new HashMap<>();
     static {
@@ -16,7 +16,13 @@ public class SnakeDirectionCalculator {
         keyTypeToDirection.put(KeyType.ArrowDown, Direction.DOWN);
     }
 
-    public Direction getNewDirection(GameState state, KeyStroke keyStroke) {
+    @Override
+    public GameState calculateNextState(GameState state, KeyStroke keyStroke) {
+        Snake snake = new Snake(state.getSnake().getBody(), getNewDirection(state, keyStroke));
+        return new GameState(snake, state.getApplePosition());
+    }
+
+    private Direction getNewDirection(GameState state, KeyStroke keyStroke) {
         Direction currentDir = state.getSnake().getDirection();
         if (keyStroke != null) {
             Direction newDir = keyTypeToDirection.get(keyStroke.getKeyType());

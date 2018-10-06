@@ -1,7 +1,6 @@
 package com.gk.snake.logic;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
+import com.gk.snake.KeyStroke;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,11 +10,10 @@ import static org.junit.Assert.assertEquals;
 
 public class SnakeDirectionCalculatorTest {
 
-    private static final KeyStroke LEFT_ARROW_KEY_STROKE = new KeyStroke(KeyType.ArrowLeft);
-    private static final KeyStroke RIGHT_ARROW_KEY_STROKE = new KeyStroke(KeyType.ArrowRight);
-    private static final KeyStroke UP_ARROW_KEY_STROKE = new KeyStroke(KeyType.ArrowUp);
-    private static final KeyStroke DOWN_ARROW_KEY_STROKE = new KeyStroke(KeyType.ArrowDown);
-    private static final KeyStroke ENTER_KEY_STROKE = new KeyStroke(KeyType.Enter);
+    private static final KeyStroke LEFT_ARROW_KEY_STROKE = KeyStroke.LEFT_ARROW;
+    private static final KeyStroke RIGHT_ARROW_KEY_STROKE = KeyStroke.RIGHT_ARROW;
+    private static final KeyStroke UP_ARROW_KEY_STROKE = KeyStroke.UP_ARROW;
+    private static final KeyStroke DOWN_ARROW_KEY_STROKE = KeyStroke.DOWN_ARROW;
 
     private SnakeDirectionCalculator directionCalculator = new SnakeDirectionCalculator();
 
@@ -24,7 +22,7 @@ public class SnakeDirectionCalculatorTest {
         GameState oldState = new GameState(new Snake(Collections.singletonList(new XY(1, 2)), Direction.UP),
                 new XY(3, 4));
 
-        GameState newState = directionCalculator.calculateNextState(oldState, ENTER_KEY_STROKE);
+        GameState newState = directionCalculator.calculateNextState(oldState, null);
 
         assertEquals(Collections.singletonList(new XY(1, 2)), newState.getSnake().getBody());
         assertEquals(new XY(3, 4), newState.getApplePosition());
@@ -71,13 +69,8 @@ public class SnakeDirectionCalculatorTest {
     }
 
     @Test
-    public void testNoKeyPressed() {
+    public void testNoOrUnknownKeyPressed() {
         assertEquals(Direction.DOWN, getNewDirection(Direction.DOWN, null));
-    }
-
-    @Test
-    public void testIrrelevantKeyPressed() {
-        assertEquals(Direction.DOWN, getNewDirection(Direction.DOWN, ENTER_KEY_STROKE));
     }
 
     private Direction getNewDirection(Direction up, KeyStroke keyStroke) {

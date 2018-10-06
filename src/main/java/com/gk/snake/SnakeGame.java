@@ -55,8 +55,7 @@ public class SnakeGame {
                 finished = true;
             } else {
                 if (keyStroke != null) {
-                    // TODO abstract key away from Lanterna
-                    gameLogicProcessor.processNextFrame(keyStroke);
+                    gameLogicProcessor.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
                 }
                 timer.waitOneFrame();
             }

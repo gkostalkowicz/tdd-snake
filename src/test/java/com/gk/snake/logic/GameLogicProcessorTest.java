@@ -1,7 +1,6 @@
 package com.gk.snake.logic;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
+import com.gk.snake.KeyStroke;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -22,13 +21,13 @@ public class GameLogicProcessorTest {
 
         GameRule rule1 = mock(GameRule.class);
         GameRule rule2 = mock(GameRule.class);
-        when(rule1.calculateNextState(state0, new KeyStroke(KeyType.ArrowLeft))).thenReturn(state1);
-        when(rule2.calculateNextState(state1, new KeyStroke(KeyType.ArrowLeft))).thenReturn(state2);
+        when(rule1.calculateNextState(state0, KeyStroke.LEFT_ARROW)).thenReturn(state1);
+        when(rule2.calculateNextState(state1, KeyStroke.LEFT_ARROW)).thenReturn(state2);
 
         GameLogicProcessor gameLogicProcessor = new GameLogicProcessor(Arrays.asList(rule1, rule2), state0);
 
         // when
-        gameLogicProcessor.processNextFrame(new KeyStroke(KeyType.ArrowLeft));
+        gameLogicProcessor.processNextFrame(KeyStroke.LEFT_ARROW);
 
         // then
         assertEquals(state2, gameLogicProcessor.getState());

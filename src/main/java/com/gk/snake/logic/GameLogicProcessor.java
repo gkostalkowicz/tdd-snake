@@ -1,6 +1,6 @@
 package com.gk.snake.logic;
 
-import com.googlecode.lanterna.input.KeyStroke;
+import com.gk.snake.KeyStroke;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -68,6 +68,6 @@ public class SnakeGameTest {
 
         game.start();
 
-        verify(gameLogicProcessor).processNextFrame(new KeyStroke(KeyType.ArrowLeft));
+        verify(gameLogicProcessor).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
     }
 }

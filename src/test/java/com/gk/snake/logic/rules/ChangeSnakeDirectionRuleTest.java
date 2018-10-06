@@ -12,21 +12,21 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
-public class SnakeDirectionCalculatorTest {
+public class ChangeSnakeDirectionRuleTest {
 
     private static final KeyStroke LEFT_ARROW_KEY_STROKE = KeyStroke.LEFT_ARROW;
     private static final KeyStroke RIGHT_ARROW_KEY_STROKE = KeyStroke.RIGHT_ARROW;
     private static final KeyStroke UP_ARROW_KEY_STROKE = KeyStroke.UP_ARROW;
     private static final KeyStroke DOWN_ARROW_KEY_STROKE = KeyStroke.DOWN_ARROW;
 
-    private SnakeDirectionCalculator directionCalculator = new SnakeDirectionCalculator();
+    private ChangeSnakeDirectionRule changeDirectionRule = new ChangeSnakeDirectionRule();
 
     @Test
     public void gameStatePropertiesOtherThanDirectionAreNotChanged() {
         GameState oldState = new GameState(new Snake(Collections.singletonList(new XY(1, 2)), Direction.UP),
                 new XY(3, 4));
 
-        GameState newState = directionCalculator.calculateNextState(oldState, null);
+        GameState newState = changeDirectionRule.calculateNextState(oldState, null);
 
         assertEquals(Collections.singletonList(new XY(1, 2)), newState.getSnake().getBody());
         assertEquals(new XY(3, 4), newState.getApplePosition());
@@ -79,7 +79,7 @@ public class SnakeDirectionCalculatorTest {
 
     private Direction getNewDirection(Direction up, KeyStroke keyStroke) {
         GameState oldState = new GameState(new Snake(new ArrayList<>(), up), null);
-        GameState newState = directionCalculator.calculateNextState(oldState, keyStroke);
+        GameState newState = changeDirectionRule.calculateNextState(oldState, keyStroke);
         return newState.getSnake().getDirection();
     }
 }

@@ -8,7 +8,7 @@ import com.gk.snake.logic.domain.XY;
 
 import java.util.List;
 
-public class SnakePositionCalculator implements GameRule {
+public class MoveSnakeAndEatAppleRule implements GameRule {
 
     @Override
     public GameState calculateNextState(GameState state, KeyStroke keyStroke) {

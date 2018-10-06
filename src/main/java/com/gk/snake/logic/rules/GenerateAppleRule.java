@@ -5,7 +5,7 @@ import com.gk.snake.logic.domain.GameState;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class AppleGenerator implements GameRule {
+public class GenerateAppleRule implements GameRule {
 
     private final PositionGenerator positionGenerator;
 

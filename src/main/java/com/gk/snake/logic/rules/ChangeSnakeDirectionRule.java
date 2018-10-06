@@ -8,7 +8,7 @@ import com.gk.snake.logic.domain.Snake;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SnakeDirectionCalculator implements GameRule {
+public class ChangeSnakeDirectionRule implements GameRule {
 
     private static Map<KeyStroke, Direction> keyTypeToDirection = new HashMap<>();
     static {

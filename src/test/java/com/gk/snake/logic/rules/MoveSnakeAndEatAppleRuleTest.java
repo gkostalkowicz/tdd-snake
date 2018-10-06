@@ -13,16 +13,16 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class SnakePositionCalculatorTest {
+public class MoveSnakeAndEatAppleRuleTest {
 
-    private SnakePositionCalculator positionCalculator = new SnakePositionCalculator();
+    private MoveSnakeAndEatAppleRule moveSnakeRule = new MoveSnakeAndEatAppleRule();
 
     @Test
     public void whenCalculate_thenGameStatePropertiesOtherThanBodyAreNotChanged() {
 
         GameState oldState = new GameState(new Snake(Arrays.asList(new XY(1, 2), new XY(1, 3)), Direction.LEFT), new XY(3, 4));
 
-        GameState newState = positionCalculator.calculateNextState(oldState, null);
+        GameState newState = moveSnakeRule.calculateNextState(oldState, null);
 
         assertEquals(Direction.LEFT, newState.getSnake().getDirection());
         assertEquals(new XY(3, 4), newState.getApplePosition());
@@ -37,7 +37,7 @@ public class SnakePositionCalculatorTest {
         oldPosition.add(new XY(11, 3));
         GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), new XY(1, 1));
 
-        GameState newState = positionCalculator.calculateNextState(oldState, null);
+        GameState newState = moveSnakeRule.calculateNextState(oldState, null);
         List<XY> newPosition = newState.getSnake().getBody();
 
         assertEquals(3, newPosition.size());
@@ -55,7 +55,7 @@ public class SnakePositionCalculatorTest {
         oldPosition.add(new XY(11, 3));
         GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), new XY(8, 3));
 
-        GameState newState = positionCalculator.calculateNextState(oldState, null);
+        GameState newState = moveSnakeRule.calculateNextState(oldState, null);
 
         assertNull(newState.getApplePosition());
     }
@@ -69,7 +69,7 @@ public class SnakePositionCalculatorTest {
         oldPosition.add(new XY(11, 3));
         GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), new XY(8, 3));
 
-        GameState newState = positionCalculator.calculateNextState(oldState, null);
+        GameState newState = moveSnakeRule.calculateNextState(oldState, null);
         List<XY> newPosition = newState.getSnake().getBody();
 
         assertEquals(4, newPosition.size());

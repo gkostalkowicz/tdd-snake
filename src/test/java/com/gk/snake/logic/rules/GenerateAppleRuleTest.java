@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AppleGeneratorTest {
+public class GenerateAppleRuleTest {
 
     // TODO don't use null for no apple?
 
@@ -17,10 +17,10 @@ public class AppleGeneratorTest {
 
         PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
         when(positionGeneratorStub.generatePosition()).thenReturn(new XY(10, 20));
-        AppleGenerator appleGenerator = new AppleGenerator(positionGeneratorStub);
+        GenerateAppleRule generateAppleRule = new GenerateAppleRule(positionGeneratorStub);
         GameState stateWithoutApple = new GameState(null, null);
 
-        GameState stateWithApple = appleGenerator.calculateNextState(stateWithoutApple, null);
+        GameState stateWithApple = generateAppleRule.calculateNextState(stateWithoutApple, null);
 
         assertEquals(new XY(10, 20), stateWithApple.getApplePosition());
     }
@@ -29,10 +29,10 @@ public class AppleGeneratorTest {
     public void testGivenExistingAppleItStays() {
 
         PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
-        AppleGenerator appleGenerator = new AppleGenerator(positionGeneratorStub);
+        GenerateAppleRule generateAppleRule = new GenerateAppleRule(positionGeneratorStub);
         GameState stateWithoutApple = new GameState(null, new XY(20, 30));
 
-        GameState stateWithApple = appleGenerator.calculateNextState(stateWithoutApple, null);
+        GameState stateWithApple = generateAppleRule.calculateNextState(stateWithoutApple, null);
 
         assertEquals(new XY(20, 30), stateWithApple.getApplePosition());
     }

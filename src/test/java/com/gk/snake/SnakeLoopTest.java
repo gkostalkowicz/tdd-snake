@@ -11,12 +11,12 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
-public class SnakeGameTest {
+public class SnakeLoopTest {
 
     private Screen screenMock;
     private Timer timerMock;
     private GameLogicProcessor gameLogicProcessor;
-    private SnakeGame game;
+    private SnakeLoop game;
 
     @Before
     public void setUp() {
@@ -24,7 +24,7 @@ public class SnakeGameTest {
         screenMock = mock(Screen.class);
         timerMock = mock(Timer.class);
         gameLogicProcessor = mock(GameLogicProcessor.class);
-        game = new SnakeGame(screenMock, timerMock, gameLogicProcessor);
+        game = new SnakeLoop(screenMock, timerMock, gameLogicProcessor);
     }
 
     @Test

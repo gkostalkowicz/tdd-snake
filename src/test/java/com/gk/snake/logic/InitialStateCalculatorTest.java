@@ -14,7 +14,7 @@ public class InitialStateCalculatorTest {
     @Test
     public void testInitialState() {
 
-        GameState state = new InitialStateCalculator().getInitialState(80, 25, null);
+        GameState state = new InitialStateCalculator().getInitialState(80, 25, null, new SnakePositionUpdater());
         Snake snake = state.getSnake();
 
         List<XY> body = snake.getBody();

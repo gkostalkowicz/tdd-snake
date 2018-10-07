@@ -25,7 +25,10 @@ public class Board {
             state = new GameState(state.getSnake(), positionGenerator.generatePosition());
         }
 
-        state.getSnake().updateSnakeDirection(keyStroke);
+        boolean appleEaten = state.getSnake().updateForNextFrame(keyStroke, state.getApplePosition());
+        if (appleEaten) {
+            state = new GameState(state.getSnake(), null);
+        }
 
         // TODO return playing/game over flag
         for (GameRule gameRule : gameRules) {

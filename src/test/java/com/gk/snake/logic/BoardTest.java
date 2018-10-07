@@ -12,8 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class BoardTest {
 
@@ -22,7 +21,7 @@ public class BoardTest {
 
         PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
         when(positionGeneratorStub.generatePosition()).thenReturn(new XY(10, 20));
-        GameState stateWithoutApple = new GameState(null, null);
+        GameState stateWithoutApple = new GameState(mock(Snake.class), null);
         Board board = new Board(Collections.emptyList(), positionGeneratorStub, stateWithoutApple);
 
         board.processNextFrame(null);
@@ -34,7 +33,7 @@ public class BoardTest {
     public void testGivenExistingAppleItStays() {
 
         PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
-        GameState stateWithApple = new GameState(null, new XY(20, 30));
+        GameState stateWithApple = new GameState(mock(Snake.class), new XY(20, 30));
         Board board = new Board(Collections.emptyList(), positionGeneratorStub, stateWithApple);
 
         board.processNextFrame(null);
@@ -43,11 +42,26 @@ public class BoardTest {
     }
 
     @Test
+    public void whenProcessNextFrame_thenSnakeDirectionIsUpdated() {
+
+        Snake snakeMock = mock(Snake.class);
+        GameState gameState = new GameState(snakeMock, null);
+        Board board = new Board(Collections.emptyList(), mock(PositionGenerator.class), gameState);
+
+        board.processNextFrame(KeyStroke.LEFT_ARROW);
+
+        verify(snakeMock).updateSnakeDirection(KeyStroke.LEFT_ARROW);
+    }
+
+    @Test
     public void gameStateIsProcessedByRules() {
 
-        GameState state0 = new GameState(new Snake(Collections.emptyList(), null), new XY(0, 0));
-        GameState state1 = new GameState(new Snake(Collections.emptyList(), null), new XY(0, 1));
-        GameState state2 = new GameState(new Snake(Collections.emptyList(), null), new XY(0, 2));
+        GameState state0 = new GameState(new Snake(Collections.emptyList(), null, mock(SnakeDirectionUpdater.class)),
+                new XY(0, 0));
+        GameState state1 = new GameState(new Snake(Collections.emptyList(), null, mock(SnakeDirectionUpdater.class)),
+                new XY(0, 1));
+        GameState state2 = new GameState(new Snake(Collections.emptyList(), null, mock(SnakeDirectionUpdater.class)),
+                new XY(0, 2));
 
         GameRule rule1 = mock(GameRule.class);
         GameRule rule2 = mock(GameRule.class);

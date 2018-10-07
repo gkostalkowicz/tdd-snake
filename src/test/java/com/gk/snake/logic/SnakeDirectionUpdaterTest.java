@@ -1,36 +1,19 @@
-package com.gk.snake.logic.rules;
+package com.gk.snake.logic;
 
 import com.gk.snake.KeyStroke;
 import com.gk.snake.logic.domain.Direction;
-import com.gk.snake.logic.domain.GameState;
-import com.gk.snake.logic.domain.Snake;
-import com.gk.snake.logic.domain.XY;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
-public class ChangeSnakeDirectionRuleTest {
+public class SnakeDirectionUpdaterTest {
 
     private static final KeyStroke LEFT_ARROW_KEY_STROKE = KeyStroke.LEFT_ARROW;
     private static final KeyStroke RIGHT_ARROW_KEY_STROKE = KeyStroke.RIGHT_ARROW;
     private static final KeyStroke UP_ARROW_KEY_STROKE = KeyStroke.UP_ARROW;
     private static final KeyStroke DOWN_ARROW_KEY_STROKE = KeyStroke.DOWN_ARROW;
 
-    private ChangeSnakeDirectionRule changeDirectionRule = new ChangeSnakeDirectionRule();
-
-    @Test
-    public void gameStatePropertiesOtherThanDirectionAreNotChanged() {
-        GameState oldState = new GameState(new Snake(Collections.singletonList(new XY(1, 2)), Direction.UP),
-                new XY(3, 4));
-
-        GameState newState = changeDirectionRule.calculateNextState(oldState, null);
-
-        assertEquals(Collections.singletonList(new XY(1, 2)), newState.getSnake().getBody());
-        assertEquals(new XY(3, 4), newState.getApplePosition());
-    }
+    private SnakeDirectionUpdater snakeDirectionUpdater = new SnakeDirectionUpdater();
 
     @Test
     public void testLeftArrow() {
@@ -77,9 +60,7 @@ public class ChangeSnakeDirectionRuleTest {
         assertEquals(Direction.DOWN, getNewDirection(Direction.DOWN, null));
     }
 
-    private Direction getNewDirection(Direction up, KeyStroke keyStroke) {
-        GameState oldState = new GameState(new Snake(new ArrayList<>(), up), null);
-        GameState newState = changeDirectionRule.calculateNextState(oldState, keyStroke);
-        return newState.getSnake().getDirection();
+    private Direction getNewDirection(Direction oldDirection, KeyStroke keyStroke) {
+        return snakeDirectionUpdater.getNextDirection(oldDirection, keyStroke);
     }
 }

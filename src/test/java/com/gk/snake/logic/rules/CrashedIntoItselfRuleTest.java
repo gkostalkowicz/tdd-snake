@@ -18,7 +18,7 @@ public class CrashedIntoItselfRuleTest {
 
         // snake made a loop and crashed into itself
         List<XY> body = Arrays.asList(new XY(1, 1), new XY(2, 1), new XY(2, 2), new XY(1, 2), new XY(1, 1));
-        GameState prevState = new GameState(new Snake(body, null), null);
+        GameState prevState = new GameState(new Snake(body, null, null), null);
 
         GameState nextState = new CrashedIntoItselfRule().calculateNextState(prevState, null);
 
@@ -29,7 +29,7 @@ public class CrashedIntoItselfRuleTest {
     public void givenThatSnakeDidNotCrash_whenCalculate_thenReturnGameOver() {
 
         List<XY> body = Arrays.asList(new XY(1, 1), new XY(2, 1));
-        GameState prevState = new GameState(new Snake(body, null), null);
+        GameState prevState = new GameState(new Snake(body, null, null), null);
 
         GameState nextState = new CrashedIntoItselfRule().calculateNextState(prevState, null);
 

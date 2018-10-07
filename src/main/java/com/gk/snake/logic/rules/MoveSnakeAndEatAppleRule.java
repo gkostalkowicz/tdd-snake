@@ -30,7 +30,7 @@ public class MoveSnakeAndEatAppleRule implements GameRule {
             body.remove(body.size() - 1);
         }
 
-        return new GameState(new Snake(body, direction), newApplePosition);
+        return new GameState(new Snake(body, direction, state.getSnake().getSnakeDirectionUpdater()), newApplePosition);
     }
 
     private boolean snakeBodyOverlapsWithApple(List<XY> body, XY applePosition) {

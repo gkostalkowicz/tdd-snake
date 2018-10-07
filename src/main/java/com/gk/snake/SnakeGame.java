@@ -2,6 +2,7 @@ package com.gk.snake;
 
 import com.gk.snake.logic.Board;
 import com.gk.snake.logic.InitialStateCalculator;
+import com.gk.snake.logic.SnakeDirectionUpdater;
 import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.rules.*;
 import com.googlecode.lanterna.TerminalSize;
@@ -30,12 +31,12 @@ public class SnakeGame {
 
     private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {
         List<GameRule> gameRules = new ArrayList<>();
-        gameRules.add(new ChangeSnakeDirectionRule());
         gameRules.add(new MoveSnakeAndEatAppleRule());
         gameRules.add(new CrashedIntoWallRule(boardWidth, boardHeight));
         gameRules.add(new CrashedIntoItselfRule());
 
-        GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight);
+        GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight,
+                new SnakeDirectionUpdater());
         return new Board(gameRules, new PositionGenerator(boardWidth, boardHeight, new Random()), initialState);
     }
 }

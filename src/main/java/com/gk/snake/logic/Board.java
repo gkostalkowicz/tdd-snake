@@ -16,6 +16,7 @@ public class Board {
 
     private final PositionGenerator positionGenerator;
 
+    // TODO remove GameState
     @Getter
     private GameState state;
 
@@ -23,6 +24,8 @@ public class Board {
         if (state.getApplePosition() == null) {
             state = new GameState(state.getSnake(), positionGenerator.generatePosition());
         }
+
+        state.getSnake().updateSnakeDirection(keyStroke);
 
         // TODO return playing/game over flag
         for (GameRule gameRule : gameRules) {

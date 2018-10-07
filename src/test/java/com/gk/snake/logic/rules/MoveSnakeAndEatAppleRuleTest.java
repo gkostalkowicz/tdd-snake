@@ -20,7 +20,7 @@ public class MoveSnakeAndEatAppleRuleTest {
     @Test
     public void whenCalculate_thenGameStatePropertiesOtherThanBodyAreNotChanged() {
 
-        GameState oldState = new GameState(new Snake(Arrays.asList(new XY(1, 2), new XY(1, 3)), Direction.LEFT), new XY(3, 4));
+        GameState oldState = new GameState(new Snake(Arrays.asList(new XY(1, 2), new XY(1, 3)), Direction.LEFT, null), new XY(3, 4));
 
         GameState newState = moveSnakeRule.calculateNextState(oldState, null);
 
@@ -35,7 +35,7 @@ public class MoveSnakeAndEatAppleRuleTest {
         oldPosition.add(new XY(9, 3));
         oldPosition.add(new XY(10, 3));
         oldPosition.add(new XY(11, 3));
-        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), new XY(1, 1));
+        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT, null), new XY(1, 1));
 
         GameState newState = moveSnakeRule.calculateNextState(oldState, null);
         List<XY> newPosition = newState.getSnake().getBody();
@@ -53,7 +53,7 @@ public class MoveSnakeAndEatAppleRuleTest {
         oldPosition.add(new XY(9, 3));
         oldPosition.add(new XY(10, 3));
         oldPosition.add(new XY(11, 3));
-        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), new XY(8, 3));
+        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT, null), new XY(8, 3));
 
         GameState newState = moveSnakeRule.calculateNextState(oldState, null);
 
@@ -67,7 +67,7 @@ public class MoveSnakeAndEatAppleRuleTest {
         oldPosition.add(new XY(9, 3));
         oldPosition.add(new XY(10, 3));
         oldPosition.add(new XY(11, 3));
-        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT), new XY(8, 3));
+        GameState oldState = new GameState(new Snake(oldPosition, Direction.LEFT, null), new XY(8, 3));
 
         GameState newState = moveSnakeRule.calculateNextState(oldState, null);
         List<XY> newPosition = newState.getSnake().getBody();

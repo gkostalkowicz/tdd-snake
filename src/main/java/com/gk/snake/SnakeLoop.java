@@ -28,11 +28,13 @@ public class SnakeLoop {
             } else {
                 if (keyStroke != null) {
                     gameLogicProcessor.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
+                    // TODO render returned state
                 }
                 timer.waitOneFrame();
             }
         }
 
+        // TODO put in finally block
         screen.stopScreen();
     }
 }

@@ -17,6 +17,7 @@ public class GameLogicProcessor {
     private GameState state;
 
     public void processNextFrame(KeyStroke keyStroke) {
+        // TODO return playing/game over flag
         for (GameRule gameRule : gameRules) {
             state = gameRule.calculateNextState(state, keyStroke);
         }

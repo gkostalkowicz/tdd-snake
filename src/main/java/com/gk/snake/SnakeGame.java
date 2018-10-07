@@ -33,6 +33,8 @@ public class SnakeGame {
         gameRules.add(new GenerateAppleRule(new PositionGenerator(boardWidth, boardHeight, new Random())));
         gameRules.add(new ChangeSnakeDirectionRule());
         gameRules.add(new MoveSnakeAndEatAppleRule());
+        gameRules.add(new CrashedIntoWallRule(boardWidth, boardHeight));
+        gameRules.add(new CrashedIntoItselfRule());
 
         GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight);
         return new GameLogicProcessor(gameRules, initialState);

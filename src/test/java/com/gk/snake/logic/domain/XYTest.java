@@ -24,4 +24,9 @@ public class XYTest {
     public void testEqualsObject() {
         assertFalse(new XY(10, 20).equals(new Object()));
     }
+
+    @Test
+    public void hashCodeOfEqualXyInstancesIsTheSame() {
+        assertTrue(new XY(10, 20).hashCode() == new XY(10, 20).hashCode());
+    }
 }

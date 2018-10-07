@@ -1,10 +1,12 @@
 package com.gk.snake.logic.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class XY {
 
     private final int x;
@@ -13,15 +15,6 @@ public class XY {
     public XY(XY xy, int xDelta, int yDelta) {
         this.x = xy.x + xDelta;
         this.y = xy.y + yDelta;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof XY)) {
-            return false;
-        }
-        XY xy = (XY) obj;
-        return x == xy.x && y == xy.y;
     }
 
     @Override

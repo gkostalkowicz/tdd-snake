@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class GameLogicProcessorTest {
+public class BoardTest {
 
     @Test
     public void gameStateIsProcessedByRules() {
@@ -28,12 +28,12 @@ public class GameLogicProcessorTest {
         when(rule1.calculateNextState(state0, KeyStroke.LEFT_ARROW)).thenReturn(state1);
         when(rule2.calculateNextState(state1, KeyStroke.LEFT_ARROW)).thenReturn(state2);
 
-        GameLogicProcessor gameLogicProcessor = new GameLogicProcessor(Arrays.asList(rule1, rule2), state0);
+        Board board = new Board(Arrays.asList(rule1, rule2), state0);
 
         // when
-        gameLogicProcessor.processNextFrame(KeyStroke.LEFT_ARROW);
+        board.processNextFrame(KeyStroke.LEFT_ARROW);
 
         // then
-        assertEquals(state2, gameLogicProcessor.getState());
+        assertEquals(state2, board.getState());
     }
 }

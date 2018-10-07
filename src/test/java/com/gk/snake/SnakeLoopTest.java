@@ -1,6 +1,6 @@
 package com.gk.snake;
 
-import com.gk.snake.logic.GameLogicProcessor;
+import com.gk.snake.logic.Board;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -15,7 +15,7 @@ public class SnakeLoopTest {
 
     private Screen screenMock;
     private Timer timerMock;
-    private GameLogicProcessor gameLogicProcessorMock;
+    private Board boardMock;
     private SnakeLoop game;
 
     @Before
@@ -23,8 +23,8 @@ public class SnakeLoopTest {
 
         screenMock = mock(Screen.class);
         timerMock = mock(Timer.class);
-        gameLogicProcessorMock = mock(GameLogicProcessor.class);
-        game = new SnakeLoop(screenMock, timerMock, gameLogicProcessorMock);
+        boardMock = mock(Board.class);
+        game = new SnakeLoop(screenMock, timerMock, boardMock);
     }
 
     @Test
@@ -83,6 +83,6 @@ public class SnakeLoopTest {
 
         game.start();
 
-        verify(gameLogicProcessorMock).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
+        verify(boardMock).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
     }
 }

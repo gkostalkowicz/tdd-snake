@@ -1,6 +1,6 @@
 package com.gk.snake;
 
-import com.gk.snake.logic.GameLogicProcessor;
+import com.gk.snake.logic.Board;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -15,7 +15,7 @@ public class SnakeLoop {
 
     private final Timer timer;
 
-    private final GameLogicProcessor gameLogicProcessor;
+    private final Board board;
 
     public void start() throws IOException {
         screen.startScreen();
@@ -34,7 +34,7 @@ public class SnakeLoop {
                 finished = true;
             } else {
                 if (keyStroke != null) {
-                    gameLogicProcessor.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
+                    board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
                     // TODO render returned state
                 }
                 timer.waitOneFrame();

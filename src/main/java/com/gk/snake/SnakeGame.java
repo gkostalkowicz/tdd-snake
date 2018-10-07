@@ -1,6 +1,6 @@
 package com.gk.snake;
 
-import com.gk.snake.logic.GameLogicProcessor;
+import com.gk.snake.logic.Board;
 import com.gk.snake.logic.InitialStateCalculator;
 import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.rules.*;
@@ -22,13 +22,13 @@ public class SnakeGame {
         int boardHeight = terminalSize.getRows();
         int boardWidth = terminalSize.getColumns();
 
-        GameLogicProcessor gameLogicProcessor = createGameLogicProcessor(boardHeight, boardWidth);
+        Board board = createGameLogicProcessor(boardHeight, boardWidth);
 
-        SnakeLoop snakeLoop = new SnakeLoop(screen, new Timer(), gameLogicProcessor);
+        SnakeLoop snakeLoop = new SnakeLoop(screen, new Timer(), board);
         snakeLoop.start();
     }
 
-    private static GameLogicProcessor createGameLogicProcessor(int boardHeight, int boardWidth) {
+    private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {
         List<GameRule> gameRules = new ArrayList<>();
         gameRules.add(new GenerateAppleRule(new PositionGenerator(boardWidth, boardHeight, new Random())));
         gameRules.add(new ChangeSnakeDirectionRule());
@@ -37,6 +37,6 @@ public class SnakeGame {
         gameRules.add(new CrashedIntoItselfRule());
 
         GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight);
-        return new GameLogicProcessor(gameRules, initialState);
+        return new Board(gameRules, initialState);
     }
 }

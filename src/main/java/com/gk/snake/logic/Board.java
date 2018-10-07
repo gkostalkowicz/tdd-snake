@@ -9,7 +9,7 @@ import lombok.Getter;
 import java.util.List;
 
 @AllArgsConstructor
-public class GameLogicProcessor {
+public class Board {
 
     private final List<GameRule> gameRules;
 

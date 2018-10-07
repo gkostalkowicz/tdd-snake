@@ -30,13 +30,12 @@ public class SnakeGame {
 
     private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {
         List<GameRule> gameRules = new ArrayList<>();
-        gameRules.add(new GenerateAppleRule(new PositionGenerator(boardWidth, boardHeight, new Random())));
         gameRules.add(new ChangeSnakeDirectionRule());
         gameRules.add(new MoveSnakeAndEatAppleRule());
         gameRules.add(new CrashedIntoWallRule(boardWidth, boardHeight));
         gameRules.add(new CrashedIntoItselfRule());
 
         GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight);
-        return new Board(gameRules, initialState);
+        return new Board(gameRules, new PositionGenerator(boardWidth, boardHeight, new Random()), initialState);
     }
 }

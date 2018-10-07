@@ -6,6 +6,7 @@ import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.domain.XY;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoveSnakeAndEatAppleRule implements GameRule {
@@ -14,7 +15,7 @@ public class MoveSnakeAndEatAppleRule implements GameRule {
     public GameState calculateNextState(GameState state, KeyStroke keyStroke) {
 
         Direction direction = state.getSnake().getDirection();
-        List<XY> body = state.getSnake().getBody();
+        List<XY> body = new ArrayList<>(state.getSnake().getBody());
 
         // add new head
         body.add(0, new XY(body.get(0), direction.getXDelta(), direction.getYDelta()));

@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 
 public class GenerateAppleRuleTest {
 
-    // TODO don't use null for no apple?
-
     @Test
     public void testGivenNoAppleAnAppleIsGenerated() {
 

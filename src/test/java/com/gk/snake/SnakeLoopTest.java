@@ -15,7 +15,7 @@ public class SnakeLoopTest {
 
     private Screen screenMock;
     private Timer timerMock;
-    private GameLogicProcessor gameLogicProcessor;
+    private GameLogicProcessor gameLogicProcessorMock;
     private SnakeLoop game;
 
     @Before
@@ -23,8 +23,8 @@ public class SnakeLoopTest {
 
         screenMock = mock(Screen.class);
         timerMock = mock(Timer.class);
-        gameLogicProcessor = mock(GameLogicProcessor.class);
-        game = new SnakeLoop(screenMock, timerMock, gameLogicProcessor);
+        gameLogicProcessorMock = mock(GameLogicProcessor.class);
+        game = new SnakeLoop(screenMock, timerMock, gameLogicProcessorMock);
     }
 
     @Test
@@ -62,12 +62,27 @@ public class SnakeLoopTest {
     }
 
     @Test
+    public void testScreenIsStoppedWhenExceptionIsThrownFromGameLogicProcessor() throws IOException {
+
+        when(screenMock.pollInput()).thenReturn(null, new KeyStroke(KeyType.Escape));
+        doThrow(new RuntimeException()).when(timerMock).waitOneFrame();
+
+        try {
+            game.start();
+        } catch (RuntimeException e) {
+            // ignore
+        }
+
+        verify(screenMock).stopScreen();
+    }
+
+    @Test
     public void testKeyStrokesAreSentToGameEngine() throws IOException {
 
         when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.ArrowLeft), new KeyStroke(KeyType.Escape));
 
         game.start();
 
-        verify(gameLogicProcessor).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
+        verify(gameLogicProcessorMock).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
     }
 }

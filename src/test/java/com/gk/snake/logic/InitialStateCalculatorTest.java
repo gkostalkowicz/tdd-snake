@@ -5,7 +5,7 @@ import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.domain.XY;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +17,7 @@ public class InitialStateCalculatorTest {
         GameState state = new InitialStateCalculator().getInitialState(80, 25);
         Snake snake = state.getSnake();
 
-        ArrayList<XY> body = snake.getBody();
+        List<XY> body = snake.getBody();
         assertEquals(5, body.size());
         assertEquals(new XY(39, 12), body.get(0));
         assertEquals(new XY(40, 12), body.get(1));

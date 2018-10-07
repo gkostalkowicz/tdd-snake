@@ -19,7 +19,14 @@ public class SnakeLoop {
 
     public void start() throws IOException {
         screen.startScreen();
+        try {
+            loop();
+        } finally {
+            screen.stopScreen();
+        }
+    }
 
+    private void loop() throws IOException {
         boolean finished = false;
         while (!finished) {
             KeyStroke keyStroke = screen.pollInput();
@@ -33,8 +40,5 @@ public class SnakeLoop {
                 timer.waitOneFrame();
             }
         }
-
-        // TODO put in finally block
-        screen.stopScreen();
     }
 }

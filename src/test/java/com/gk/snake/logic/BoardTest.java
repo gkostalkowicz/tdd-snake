@@ -7,6 +7,7 @@ import com.gk.snake.logic.domain.GameStatus;
 import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.domain.XY;
 import com.gk.snake.logic.rules.CrashedIntoItselfCheck;
+import com.gk.snake.logic.rules.CrashedIntoWallCheck;
 import com.gk.snake.logic.rules.GameRule;
 import com.gk.snake.logic.rules.PositionGenerator;
 import org.junit.Test;
@@ -29,7 +30,8 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult());
         GameState stateWithoutApple = new GameState(snakeMock, null);
-        Board board = new Board(Collections.emptyList(), positionGeneratorStub, stateWithoutApple);
+        Board board = new Board(Collections.emptyList(), mock(CrashedIntoWallCheck.class),
+                positionGeneratorStub, stateWithoutApple);
 
         board.processNextFrame(null);
 
@@ -43,7 +45,8 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult());
         GameState stateWithApple = new GameState(snakeMock, new XY(20, 30));
-        Board board = new Board(Collections.emptyList(), positionGeneratorStub, stateWithApple);
+        Board board = new Board(Collections.emptyList(), mock(CrashedIntoWallCheck.class),
+                positionGeneratorStub, stateWithApple);
 
         board.processNextFrame(null);
 
@@ -56,7 +59,8 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult());
         GameState gameState = new GameState(snakeMock, new XY(1, 2));
-        Board board = new Board(Collections.emptyList(), mock(PositionGenerator.class), gameState);
+        Board board = new Board(Collections.emptyList(), mock(CrashedIntoWallCheck.class),
+                mock(PositionGenerator.class), gameState);
 
         board.processNextFrame(KeyStroke.LEFT_ARROW);
 
@@ -69,7 +73,8 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(true, false));
         GameState gameState = new GameState(snakeMock, new XY(10, 20));
-        Board board = new Board(Collections.emptyList(), mock(PositionGenerator.class), gameState);
+        Board board = new Board(Collections.emptyList(), mock(CrashedIntoWallCheck.class),
+                mock(PositionGenerator.class), gameState);
 
         board.processNextFrame(KeyStroke.LEFT_ARROW);
 
@@ -82,7 +87,8 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
         GameState gameState = new GameState(snakeMock, new XY(10, 20));
-        Board board = new Board(Collections.emptyList(), mock(PositionGenerator.class), gameState);
+        Board board = new Board(Collections.emptyList(), mock(CrashedIntoWallCheck.class),
+                mock(PositionGenerator.class), gameState);
 
         board.processNextFrame(KeyStroke.LEFT_ARROW);
 
@@ -95,7 +101,8 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, true));
         GameState gameState = new GameState(snakeMock, null);
-        Board board = new Board(List.of(), mock(PositionGenerator.class), gameState);
+        Board board = new Board(List.of(), mock(CrashedIntoWallCheck.class),
+                mock(PositionGenerator.class), gameState);
 
         board.processNextFrame(null);
 
@@ -108,11 +115,28 @@ public class BoardTest {
         Snake snakeMock = mock(Snake.class);
         when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
         GameState gameState = new GameState(snakeMock, null);
-        Board board = new Board(List.of(), mock(PositionGenerator.class), gameState);
+        Board board = new Board(List.of(), mock(CrashedIntoWallCheck.class),
+                mock(PositionGenerator.class), gameState);
 
         board.processNextFrame(null);
 
         assertEquals(GameStatus.PLAYING, board.getState().getGameStatus());
+    }
+
+    @Test
+    public void givenThatSnakeCrashedIntoWall_whenProcessNextFrame_thenGameIsOver() {
+
+        CrashedIntoWallCheck crashedIntoWallCheckStub = mock(CrashedIntoWallCheck.class);
+        when(crashedIntoWallCheckStub.hasSnakeCrashedIntoWall(List.of(new XY(1, 1)))).thenReturn(true);
+        Snake snakeStub = mock(Snake.class);
+        when(snakeStub.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
+        when(snakeStub.getBody()).thenReturn(List.of(new XY(1, 1)));
+        GameState gameState = new GameState(snakeStub, null);
+        Board board = new Board(List.of(), crashedIntoWallCheckStub, mock(PositionGenerator.class), gameState);
+
+        board.processNextFrame(null);
+
+        assertEquals(GameStatus.GAME_OVER, board.getState().getGameStatus());
     }
 
     @Test
@@ -132,7 +156,8 @@ public class BoardTest {
         when(rule1.calculateNextState(state0, KeyStroke.LEFT_ARROW)).thenReturn(state1);
         when(rule2.calculateNextState(state1, KeyStroke.LEFT_ARROW)).thenReturn(state2);
 
-        Board board = new Board(Arrays.asList(rule1, rule2), mock(PositionGenerator.class), state0);
+        Board board = new Board(Arrays.asList(rule1, rule2), mock(CrashedIntoWallCheck.class),
+                mock(PositionGenerator.class), state0);
 
         // when
         board.processNextFrame(KeyStroke.LEFT_ARROW);

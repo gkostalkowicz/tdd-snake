@@ -4,6 +4,7 @@ import com.gk.snake.KeyStroke;
 import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.GameStatus;
 import com.gk.snake.logic.domain.Snake;
+import com.gk.snake.logic.rules.CrashedIntoWallCheck;
 import com.gk.snake.logic.rules.GameRule;
 import com.gk.snake.logic.rules.PositionGenerator;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 public class Board {
 
     private final List<GameRule> gameRules;
-
+    private final CrashedIntoWallCheck crashedIntoWallCheck;
     private final PositionGenerator positionGenerator;
 
     // TODO remove GameState
@@ -34,6 +35,10 @@ public class Board {
             state = new GameState(state.getSnake(), null);
         }
         if (updateResult.isCrashedIntoItself()) {
+            state = new GameState(state.getSnake(), state.getApplePosition(), GameStatus.GAME_OVER);
+        }
+
+        if (crashedIntoWallCheck.hasSnakeCrashedIntoWall(state.getSnake().getBody())) {
             state = new GameState(state.getSnake(), state.getApplePosition(), GameStatus.GAME_OVER);
         }
 

@@ -15,113 +15,262 @@ import static org.mockito.Mockito.*;
 
 public class BoardTest {
 
+    // -------------------
+    // generating apple
+
     @Test
-    public void testGivenNoAppleAnAppleIsGenerated() {
+    public void givenNoApple_whenProcessNextFrame_thenAnAppleIsGenerated() {
+
+        // given
+        XY currentApplePosition = null;
 
         PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
-        when(positionGeneratorStub.generatePosition()).thenReturn(new XY(10, 20));
-        Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult());
-        GameState stateWithoutApple = new GameState(snakeMock, null);
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), positionGeneratorStub, stateWithoutApple);
+        when(positionGeneratorStub.generatePosition())
+                .thenReturn(new XY(10, 20));
 
+        Board board = new BoardBuilder()
+                .applePosition(currentApplePosition)
+                .positionGenerator(positionGeneratorStub)
+                .build();
+
+        // when
         board.processNextFrame(null);
 
+        // then
         assertEquals(new XY(10, 20), board.getState().getApplePosition());
     }
 
     @Test
-    public void testGivenExistingAppleItStays() {
+    public void givenExistingApple_whenProcessNextFrame_thenAppleStays() {
 
-        PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
-        Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult());
-        GameState stateWithApple = new GameState(snakeMock, new XY(20, 30));
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), positionGeneratorStub, stateWithApple);
+        // given
+        Board board = new BoardBuilder()
+                .applePosition(new XY(20, 30))
+                .positionGenerator(mock(PositionGenerator.class))
+                .build();
 
+        // when
         board.processNextFrame(null);
 
-        assertEquals(new XY(20, 30), stateWithApple.getApplePosition());
+        // then
+        assertEquals(new XY(20, 30), board.getState().getApplePosition());
     }
+
+    // -------------------
+    // updating snake
 
     @Test
-    public void whenProcessNextFrame_thenIsUpdatedForNextFrame() {
+    public void whenProcessNextFrame_thenUpdateSnakeForNextFrameIsCalledWithRightParams() {
 
+        // given
         Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult());
-        GameState gameState = new GameState(snakeMock, new XY(1, 2));
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), mock(PositionGenerator.class), gameState);
+        Board board = new BoardBuilder()
+                .applePosition(new XY(1, 2))
+                .snakeMock(snakeMock)
+                .build();
 
+        // when
         board.processNextFrame(KeyStroke.LEFT_ARROW);
 
+        // then
         verify(snakeMock).updateForNextFrame(KeyStroke.LEFT_ARROW, new XY(1, 2));
     }
+
+    // -------------------
+    // eating apple
 
     @Test
     public void givenThatAppleIsEaten_whenProcessNextFrame_thenAppleIsRemoved() {
 
-        Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(true, false));
-        GameState gameState = new GameState(snakeMock, new XY(10, 20));
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), mock(PositionGenerator.class), gameState);
+        // given
+        XY currentApplePosition = new XY(10, 20);
 
-        board.processNextFrame(KeyStroke.LEFT_ARROW);
+        Snake snakeStub = mock(Snake.class);
+        when(snakeStub.updateForNextFrame(any(), any()))
+                .thenReturn(snakeUpdateResultWithAppleEaten(true));
 
+        Board board = new BoardBuilder()
+                .applePosition(currentApplePosition)
+                .snakeStub(snakeStub)
+                .build();
+
+        // when
+        board.processNextFrame(null);
+
+        // then
         assertNull(board.getState().getApplePosition());
     }
 
     @Test
     public void givenThatAppleIsNotEaten_whenProcessNextFrame_thenAppleStays() {
 
-        Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
-        GameState gameState = new GameState(snakeMock, new XY(10, 20));
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), mock(PositionGenerator.class), gameState);
+        // given
+        XY currentApplePosition = new XY(10, 20);
 
-        board.processNextFrame(KeyStroke.LEFT_ARROW);
+        Snake snakeStub = mock(Snake.class);
+        when(snakeStub.updateForNextFrame(any(), any()))
+                .thenReturn(snakeUpdateResultWithAppleEaten(false));
 
+        Board board = new BoardBuilder()
+                .applePosition(currentApplePosition)
+                .snakeStub(snakeStub)
+                .build();
+
+        // when
+        board.processNextFrame(null);
+
+        // then
         assertEquals(new XY(10, 20), board.getState().getApplePosition());
     }
+
+    // -------------------
+    // checking if snake crashed into itself
 
     @Test
     public void givenThatSnakeCrashedIntoItself_whenProcessNextFrame_thenGameIsOver() {
 
-        Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, true));
-        GameState gameState = new GameState(snakeMock, null);
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), mock(PositionGenerator.class), gameState);
+        // given
+        Snake snakeStub = mock(Snake.class);
+        when(snakeStub.updateForNextFrame(any(), any()))
+                .thenReturn(snakeUpdateResultWithCrashedIntoItself(true));
 
+        Board board = new BoardBuilder().snakeStub(snakeStub).build();
+
+        // when
         board.processNextFrame(null);
 
+        // then
         assertEquals(GameStatus.GAME_OVER, board.getState().getGameStatus());
     }
 
     @Test
-    public void givenThatSnakeDidNotCrashIntoItself_whenProcessNextFrame_thenGameIsStillRunning() {
+    public void givenThatSnakeDidNotCrashIntoItself_whenProcessNextFrame_thenGameIsContinued() {
 
-        Snake snakeMock = mock(Snake.class);
-        when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
-        GameState gameState = new GameState(snakeMock, null);
-        Board board = new Board(mock(SnakeCrashIntoWallCheck.class), mock(PositionGenerator.class), gameState);
+        // given
+        Snake snakeStub = mock(Snake.class);
+        when(snakeStub.updateForNextFrame(any(), any()))
+                .thenReturn(snakeUpdateResultWithCrashedIntoItself(false));
 
+        Board board = new BoardBuilder().snakeStub(snakeStub).build();
+
+        // when
         board.processNextFrame(null);
 
+        // then
         assertEquals(GameStatus.PLAYING, board.getState().getGameStatus());
+    }
+
+    // -------------------
+    // checking if snake crashed into wall
+
+    @Test
+    public void whenProcessNextFrame_thenHasSnakeCrashedIntoWallIsCalledWithRightParams() {
+
+        // given
+        SnakeCrashIntoWallCheck checkMock = mock(SnakeCrashIntoWallCheck.class);
+        Board board = new BoardBuilder()
+                .snakeWithBody(List.of(new XY(1, 1)))
+                .snakeCrashIntoWallCheck(checkMock)
+                .build();
+
+        // when
+        board.processNextFrame(null);
+
+        // then
+        verify(checkMock).hasSnakeCrashedIntoWall(List.of(new XY(1, 1)));
     }
 
     @Test
     public void givenThatSnakeCrashedIntoWall_whenProcessNextFrame_thenGameIsOver() {
 
-        SnakeCrashIntoWallCheck snakeCrashIntoWallCheckStub = mock(SnakeCrashIntoWallCheck.class);
-        when(snakeCrashIntoWallCheckStub.hasSnakeCrashedIntoWall(List.of(new XY(1, 1)))).thenReturn(true);
-        Snake snakeStub = mock(Snake.class);
-        when(snakeStub.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
-        when(snakeStub.getBody()).thenReturn(List.of(new XY(1, 1)));
-        GameState gameState = new GameState(snakeStub, null);
-        Board board = new Board(snakeCrashIntoWallCheckStub, mock(PositionGenerator.class), gameState);
+        // given
+        SnakeCrashIntoWallCheck checkStub = mock(SnakeCrashIntoWallCheck.class);
+        when(checkStub.hasSnakeCrashedIntoWall(any()))
+                .thenReturn(true);
 
+        Board board = new BoardBuilder().snakeCrashIntoWallCheck(checkStub).build();
+
+        // when
         board.processNextFrame(null);
 
+        // then
         assertEquals(GameStatus.GAME_OVER, board.getState().getGameStatus());
+    }
+
+    @Test
+    public void givenThatSnakeDidNotCrashIntoWall_whenProcessNextFrame_thenGameIsContinued() {
+
+        // given
+        SnakeCrashIntoWallCheck checkStub = mock(SnakeCrashIntoWallCheck.class);
+        when(checkStub.hasSnakeCrashedIntoWall(any()))
+                .thenReturn(false);
+
+        Board board = new BoardBuilder().snakeCrashIntoWallCheck(checkStub).build();
+
+        // when
+        board.processNextFrame(null);
+
+        // then
+        assertEquals(GameStatus.PLAYING, board.getState().getGameStatus());
+    }
+
+    // -------------------
+    // helper methods
+
+    private class BoardBuilder {
+        private Snake snake = mock(Snake.class);
+        private XY applePosition = null;
+        private SnakeCrashIntoWallCheck snakeCrashIntoWallCheck = mock(SnakeCrashIntoWallCheck.class);
+        private PositionGenerator positionGenerator = mock(PositionGenerator.class);
+
+        BoardBuilder() {
+            when(snake.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
+        }
+
+        BoardBuilder snakeStub(Snake snakeStub) {
+            this.snake = snakeStub;
+            return this;
+        }
+
+        BoardBuilder snakeMock(Snake snakeMock) {
+            when(snakeMock.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
+            this.snake = snakeMock;
+            return this;
+        }
+
+        BoardBuilder snakeWithBody(List<XY> body) {
+            this.snake = mock(Snake.class);
+            when(snake.updateForNextFrame(any(), any())).thenReturn(new Snake.UpdateResult(false, false));
+            when(snake.getBody()).thenReturn(body);
+            return this;
+        }
+
+        BoardBuilder applePosition(XY applePosition) {
+            this.applePosition = applePosition;
+            return this;
+        }
+
+        BoardBuilder snakeCrashIntoWallCheck(SnakeCrashIntoWallCheck snakeCrashIntoWallCheck) {
+            this.snakeCrashIntoWallCheck = snakeCrashIntoWallCheck;
+            return this;
+        }
+
+        BoardBuilder positionGenerator(PositionGenerator positionGenerator) {
+            this.positionGenerator = positionGenerator;
+            return this;
+        }
+
+        Board build() {
+            GameState gameState = new GameState(snake, applePosition);
+            return new Board(snakeCrashIntoWallCheck, positionGenerator, gameState);
+        }
+    }
+
+    private Snake.UpdateResult snakeUpdateResultWithAppleEaten(boolean appleEaten) {
+        return new Snake.UpdateResult(appleEaten, false);
+    }
+
+    private Snake.UpdateResult snakeUpdateResultWithCrashedIntoItself(boolean crashedIntoItself) {
+        return new Snake.UpdateResult(false, crashedIntoItself);
     }
 }

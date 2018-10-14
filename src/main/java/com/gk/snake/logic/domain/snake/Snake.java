@@ -42,16 +42,7 @@ public class Snake {
 
     @Value
     public static class UpdateResult {
-        private boolean appleEaten;
-        private boolean crashedIntoItself;
-
-        public UpdateResult(boolean appleEaten, boolean crashedIntoItself) {
-            this.appleEaten = appleEaten;
-            this.crashedIntoItself = crashedIntoItself;
-        }
-
-        public UpdateResult() {
-            this(false, false);
-        }
+        private final boolean appleEaten;
+        private final boolean crashedIntoItself;
     }
 }

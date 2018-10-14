@@ -13,7 +13,6 @@ public class Board {
     private final SnakeCrashIntoWallCheck snakeCrashIntoWallCheck;
     private final PositionGenerator positionGenerator;
 
-    // TODO remove GameState
     @Getter
     private GameState state;
 

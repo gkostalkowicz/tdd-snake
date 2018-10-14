@@ -4,6 +4,7 @@ import com.gk.snake.KeyStroke;
 import com.gk.snake.logic.SnakeDirectionUpdater;
 import com.gk.snake.logic.SnakePositionUpdater;
 import com.gk.snake.logic.SnakePositionUpdater.SnakePositionUpdate;
+import com.gk.snake.logic.rules.CrashedIntoItselfCheck;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class SnakeTest {
         when(snakePositionUpdaterStub.getNextPosition(any(), any(), any()))
                 .thenReturn(new SnakePositionUpdate(null, false));
         Snake snake = new Snake(new ArrayList<>(), Direction.LEFT, snakeDirectionUpdaterStub,
-                snakePositionUpdaterStub);
+                snakePositionUpdaterStub, mock(CrashedIntoItselfCheck.class));
 
         snake.updateForNextFrame(KeyStroke.UP_ARROW, null);
 
@@ -40,7 +41,7 @@ public class SnakeTest {
         SnakePositionUpdate update = new SnakePositionUpdate(Collections.singletonList(new XY(1, 2)), false);
         when(snakePositionUpdaterStub.getNextPosition(any(), any(), any())).thenReturn(update);
         Snake snake = new Snake(Collections.singletonList(new XY(2, 2)), Direction.LEFT,
-                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub);
+                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub, mock(CrashedIntoItselfCheck.class));
 
         snake.updateForNextFrame(null, null);
 
@@ -48,20 +49,34 @@ public class SnakeTest {
     }
 
     @Test
-    public void givenThatAppleIsEaten_whenUpdateForNextFrame_thenTrueIsReturned() {
+    public void givenThatAppleIsEaten_whenUpdateForNextFrame_thenAppleEatenEqualTrueIsReturned() {
 
         SnakePositionUpdater snakePositionUpdaterStub = mock(SnakePositionUpdater.class);
         SnakePositionUpdate update = new SnakePositionUpdate(Collections.singletonList(new XY(1, 2)), true);
         when(snakePositionUpdaterStub.getNextPosition(any(), any(), any())).thenReturn(update);
         Snake snake = new Snake(Collections.singletonList(new XY(2, 2)), Direction.LEFT,
-                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub);
+                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub, mock(CrashedIntoItselfCheck.class));
 
-        assertTrue(snake.updateForNextFrame(null, null));
+        assertTrue(snake.updateForNextFrame(null, null).isAppleEaten());
+    }
+
+    @Test
+    public void givenThatSnakeCrashedIntoItself_whenUpdateForNextFrame_thenCrashedEqualTrueIsReturned() {
+
+        SnakePositionUpdater snakePositionUpdaterMock = mock(SnakePositionUpdater.class);
+        when(snakePositionUpdaterMock.getNextPosition(any(), any(), any())).thenReturn(
+                new SnakePositionUpdate(List.of(new XY(1, 2)), false));
+        CrashedIntoItselfCheck crashedIntoItselfCheckStub = mock(CrashedIntoItselfCheck.class);
+        when(crashedIntoItselfCheckStub.hasCrashedIntoItself(List.of(new XY(1, 2)))).thenReturn(true);
+        Snake snake = new Snake(List.of(new XY(1, 1)), null, mock(SnakeDirectionUpdater.class),
+                snakePositionUpdaterMock, crashedIntoItselfCheckStub);
+
+        assertTrue(snake.updateForNextFrame(null, null).isCrashedIntoItself());
     }
 
     @Test
     public void getBodyReturnsUnmodifiableList() {
-        Snake snake = new Snake(new ArrayList<>(), Direction.LEFT, null, null);
+        Snake snake = new Snake(new ArrayList<>(), Direction.LEFT, null, null, null);
         List<XY> body = snake.getBody();
 
         try {

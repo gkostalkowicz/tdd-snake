@@ -38,7 +38,7 @@ public class CrashedIntoWallRuleTest {
     }
 
     private GameStatus getGameStatus(XY... body) {
-        GameState prevState = new GameState(new Snake(Arrays.asList(body), null, null, null), null);
+        GameState prevState = new GameState(new Snake(Arrays.asList(body), null, null, null, null), null);
         CrashedIntoWallRule crashedIntoWallRule = new CrashedIntoWallRule(80, 25);
 
         GameState nextState = crashedIntoWallRule.calculateNextState(prevState, null);

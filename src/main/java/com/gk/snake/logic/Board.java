@@ -2,6 +2,8 @@ package com.gk.snake.logic;
 
 import com.gk.snake.KeyStroke;
 import com.gk.snake.logic.domain.GameState;
+import com.gk.snake.logic.domain.GameStatus;
+import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.rules.GameRule;
 import com.gk.snake.logic.rules.PositionGenerator;
 import lombok.AllArgsConstructor;
@@ -21,16 +23,20 @@ public class Board {
     private GameState state;
 
     public void processNextFrame(KeyStroke keyStroke) {
+        // TODO return playing/game over flag
+
         if (state.getApplePosition() == null) {
             state = new GameState(state.getSnake(), positionGenerator.generatePosition());
         }
 
-        boolean appleEaten = state.getSnake().updateForNextFrame(keyStroke, state.getApplePosition());
-        if (appleEaten) {
+        Snake.UpdateResult updateResult = state.getSnake().updateForNextFrame(keyStroke, state.getApplePosition());
+        if (updateResult.isAppleEaten()) {
             state = new GameState(state.getSnake(), null);
         }
+        if (updateResult.isCrashedIntoItself()) {
+            state = new GameState(state.getSnake(), state.getApplePosition(), GameStatus.GAME_OVER);
+        }
 
-        // TODO return playing/game over flag
         for (GameRule gameRule : gameRules) {
             state = gameRule.calculateNextState(state, keyStroke);
         }

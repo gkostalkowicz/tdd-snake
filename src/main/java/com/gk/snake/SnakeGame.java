@@ -1,11 +1,11 @@
 package com.gk.snake;
 
 import com.gk.snake.logic.Board;
-import com.gk.snake.logic.CrashedIntoWallCheck;
 import com.gk.snake.logic.InitialStateCalculator;
 import com.gk.snake.logic.PositionGenerator;
+import com.gk.snake.logic.SnakeCrashIntoWallCheck;
 import com.gk.snake.logic.domain.GameState;
-import com.gk.snake.logic.domain.snake.CrashedIntoItselfCheck;
+import com.gk.snake.logic.domain.snake.SnakeCrashIntoItselfCheck;
 import com.gk.snake.logic.domain.snake.SnakeDirectionUpdater;
 import com.gk.snake.logic.domain.snake.SnakePositionUpdater;
 import com.googlecode.lanterna.TerminalSize;
@@ -32,8 +32,8 @@ public class SnakeGame {
 
     private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {
         GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight,
-                new SnakeDirectionUpdater(), new SnakePositionUpdater(), new CrashedIntoItselfCheck());
-        return new Board(new CrashedIntoWallCheck(boardWidth, boardHeight),
+                new SnakeDirectionUpdater(), new SnakePositionUpdater(), new SnakeCrashIntoItselfCheck());
+        return new Board(new SnakeCrashIntoWallCheck(boardWidth, boardHeight),
                 new PositionGenerator(boardWidth, boardHeight, new Random()), initialState);
     }
 }

@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Board {
 
-    private final CrashedIntoWallCheck crashedIntoWallCheck;
+    private final SnakeCrashIntoWallCheck snakeCrashIntoWallCheck;
     private final PositionGenerator positionGenerator;
 
     // TODO remove GameState
@@ -32,7 +32,7 @@ public class Board {
             state = state.withGameStatus(GameStatus.GAME_OVER);
         }
 
-        if (crashedIntoWallCheck.hasSnakeCrashedIntoWall(state.getSnake().getBody())) {
+        if (snakeCrashIntoWallCheck.hasSnakeCrashedIntoWall(state.getSnake().getBody())) {
             state = state.withGameStatus(GameStatus.GAME_OVER);
         }
     }

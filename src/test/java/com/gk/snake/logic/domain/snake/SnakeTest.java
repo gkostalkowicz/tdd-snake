@@ -26,7 +26,7 @@ public class SnakeTest {
         when(snakePositionUpdaterStub.getNextPosition(any(), any(), any()))
                 .thenReturn(new SnakePositionUpdate(null, false));
         Snake snake = new Snake(new ArrayList<>(), Direction.LEFT, snakeDirectionUpdaterStub,
-                snakePositionUpdaterStub, mock(CrashedIntoItselfCheck.class));
+                snakePositionUpdaterStub, mock(SnakeCrashIntoItselfCheck.class));
 
         snake.updateForNextFrame(KeyStroke.UP_ARROW, null);
 
@@ -40,7 +40,7 @@ public class SnakeTest {
         SnakePositionUpdate update = new SnakePositionUpdate(Collections.singletonList(new XY(1, 2)), false);
         when(snakePositionUpdaterStub.getNextPosition(any(), any(), any())).thenReturn(update);
         Snake snake = new Snake(Collections.singletonList(new XY(2, 2)), Direction.LEFT,
-                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub, mock(CrashedIntoItselfCheck.class));
+                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub, mock(SnakeCrashIntoItselfCheck.class));
 
         snake.updateForNextFrame(null, null);
 
@@ -54,7 +54,7 @@ public class SnakeTest {
         SnakePositionUpdate update = new SnakePositionUpdate(Collections.singletonList(new XY(1, 2)), true);
         when(snakePositionUpdaterStub.getNextPosition(any(), any(), any())).thenReturn(update);
         Snake snake = new Snake(Collections.singletonList(new XY(2, 2)), Direction.LEFT,
-                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub, mock(CrashedIntoItselfCheck.class));
+                mock(SnakeDirectionUpdater.class), snakePositionUpdaterStub, mock(SnakeCrashIntoItselfCheck.class));
 
         assertTrue(snake.updateForNextFrame(null, null).isAppleEaten());
     }
@@ -65,10 +65,10 @@ public class SnakeTest {
         SnakePositionUpdater snakePositionUpdaterMock = mock(SnakePositionUpdater.class);
         when(snakePositionUpdaterMock.getNextPosition(any(), any(), any())).thenReturn(
                 new SnakePositionUpdate(List.of(new XY(1, 2)), false));
-        CrashedIntoItselfCheck crashedIntoItselfCheckStub = mock(CrashedIntoItselfCheck.class);
-        when(crashedIntoItselfCheckStub.hasCrashedIntoItself(List.of(new XY(1, 2)))).thenReturn(true);
+        SnakeCrashIntoItselfCheck snakeCrashIntoItselfCheckStub = mock(SnakeCrashIntoItselfCheck.class);
+        when(snakeCrashIntoItselfCheckStub.hasCrashedIntoItself(List.of(new XY(1, 2)))).thenReturn(true);
         Snake snake = new Snake(List.of(new XY(1, 1)), null, mock(SnakeDirectionUpdater.class),
-                snakePositionUpdaterMock, crashedIntoItselfCheckStub);
+                snakePositionUpdaterMock, snakeCrashIntoItselfCheckStub);
 
         assertTrue(snake.updateForNextFrame(null, null).isCrashedIntoItself());
     }

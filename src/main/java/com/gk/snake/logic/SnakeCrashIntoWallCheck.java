@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class CrashedIntoWallCheck {
+public class SnakeCrashIntoWallCheck {
 
     private final int boardWidth;
     private final int boardHeight;

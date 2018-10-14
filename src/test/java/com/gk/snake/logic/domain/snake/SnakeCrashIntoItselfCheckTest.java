@@ -8,9 +8,9 @@ import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class CrashedIntoItselfCheckTest {
+public class SnakeCrashIntoItselfCheckTest {
 
-    private CrashedIntoItselfCheck crashedIntoItselfCheck = new CrashedIntoItselfCheck();
+    private SnakeCrashIntoItselfCheck snakeCrashIntoItselfCheck = new SnakeCrashIntoItselfCheck();
 
     @Test
     public void givenThatSnakeCrashedIntoItself_whenCheck_thenReturnTrue() {
@@ -18,7 +18,7 @@ public class CrashedIntoItselfCheckTest {
         // snake made a loop and crashed into itself
         List<XY> body = List.of(new XY(1, 1), new XY(2, 1), new XY(2, 2), new XY(1, 2), new XY(1, 1));
 
-        assertTrue(crashedIntoItselfCheck.hasCrashedIntoItself(body));
+        assertTrue(snakeCrashIntoItselfCheck.hasCrashedIntoItself(body));
     }
 
     @Test
@@ -26,6 +26,6 @@ public class CrashedIntoItselfCheckTest {
 
         List<XY> body = List.of(new XY(1, 1), new XY(2, 1));
 
-        assertFalse(crashedIntoItselfCheck.hasCrashedIntoItself(body));
+        assertFalse(snakeCrashIntoItselfCheck.hasCrashedIntoItself(body));
     }
 }

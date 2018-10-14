@@ -17,15 +17,15 @@ public class Snake {
     private Direction direction;
     private final SnakeDirectionUpdater snakeDirectionUpdater;
     private final SnakePositionUpdater snakePositionUpdater;
-    private final CrashedIntoItselfCheck crashedIntoItselfCheck;
+    private final SnakeCrashIntoItselfCheck snakeCrashIntoItselfCheck;
 
     public Snake(List<XY> body, Direction direction, SnakeDirectionUpdater snakeDirectionUpdater,
-                 SnakePositionUpdater snakePositionUpdater, CrashedIntoItselfCheck crashedIntoItselfCheck) {
+                 SnakePositionUpdater snakePositionUpdater, SnakeCrashIntoItselfCheck snakeCrashIntoItselfCheck) {
         this.body = List.copyOf(body);
         this.direction = direction;
         this.snakeDirectionUpdater = snakeDirectionUpdater;
         this.snakePositionUpdater = snakePositionUpdater;
-        this.crashedIntoItselfCheck = crashedIntoItselfCheck;
+        this.snakeCrashIntoItselfCheck = snakeCrashIntoItselfCheck;
     }
 
     public UpdateResult updateForNextFrame(KeyStroke keyStroke, XY applePosition) {
@@ -35,7 +35,7 @@ public class Snake {
         this.body = positionUpdate.getPosition();
         boolean appleEaten = positionUpdate.isAppleEaten();
 
-        boolean crashedIntoItself = crashedIntoItselfCheck.hasCrashedIntoItself(body);
+        boolean crashedIntoItself = snakeCrashIntoItselfCheck.hasCrashedIntoItself(body);
 
         return new UpdateResult(appleEaten, crashedIntoItself);
     }

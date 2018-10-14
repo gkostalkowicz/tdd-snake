@@ -8,7 +8,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class CrashedIntoWallCheckTest {
+public class SnakeCrashIntoWallCheckTest {
 
     @Test
     public void givenThatSnakeCrashedIntoLeftWall_whenCheck_thenReturnTrue() {
@@ -36,6 +36,6 @@ public class CrashedIntoWallCheckTest {
     }
 
     private boolean hasCrashedIntoWall(XY... body) {
-        return new CrashedIntoWallCheck(80, 25).hasSnakeCrashedIntoWall(Arrays.asList(body));
+        return new SnakeCrashIntoWallCheck(80, 25).hasSnakeCrashedIntoWall(Arrays.asList(body));
     }
 }

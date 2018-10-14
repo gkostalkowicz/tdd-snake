@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CrashedIntoItselfCheck {
+public class SnakeCrashIntoItselfCheck {
 
     public boolean hasCrashedIntoItself(List<XY> body) {
         Set<XY> xySet = new HashSet<>();

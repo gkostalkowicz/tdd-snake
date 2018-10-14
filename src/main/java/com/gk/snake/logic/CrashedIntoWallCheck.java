@@ -1,4 +1,4 @@
-package com.gk.snake.logic.rules;
+package com.gk.snake.logic;
 
 import com.gk.snake.logic.domain.XY;
 import lombok.RequiredArgsConstructor;

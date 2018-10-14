@@ -1,8 +1,8 @@
 package com.gk.snake.logic;
 
 import com.gk.snake.logic.domain.GameState;
-import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.domain.XY;
+import com.gk.snake.logic.domain.snake.Snake;
 import org.junit.Test;
 
 import java.util.List;

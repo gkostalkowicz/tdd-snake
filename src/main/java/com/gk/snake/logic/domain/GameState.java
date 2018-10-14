@@ -1,5 +1,6 @@
 package com.gk.snake.logic.domain;
 
+import com.gk.snake.logic.domain.snake.Snake;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 

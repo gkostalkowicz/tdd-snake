@@ -1,13 +1,13 @@
 package com.gk.snake;
 
 import com.gk.snake.logic.Board;
+import com.gk.snake.logic.CrashedIntoWallCheck;
 import com.gk.snake.logic.InitialStateCalculator;
-import com.gk.snake.logic.SnakeDirectionUpdater;
-import com.gk.snake.logic.SnakePositionUpdater;
+import com.gk.snake.logic.PositionGenerator;
 import com.gk.snake.logic.domain.GameState;
-import com.gk.snake.logic.rules.CrashedIntoItselfCheck;
-import com.gk.snake.logic.rules.CrashedIntoWallCheck;
-import com.gk.snake.logic.rules.PositionGenerator;
+import com.gk.snake.logic.domain.snake.CrashedIntoItselfCheck;
+import com.gk.snake.logic.domain.snake.SnakeDirectionUpdater;
+import com.gk.snake.logic.domain.snake.SnakePositionUpdater;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;

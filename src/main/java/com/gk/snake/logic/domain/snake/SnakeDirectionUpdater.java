@@ -1,4 +1,4 @@
-package com.gk.snake.logic;
+package com.gk.snake.logic.domain.snake;
 
 import com.gk.snake.KeyStroke;
 import com.gk.snake.logic.domain.Direction;

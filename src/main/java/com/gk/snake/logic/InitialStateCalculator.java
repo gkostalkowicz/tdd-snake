@@ -2,9 +2,11 @@ package com.gk.snake.logic;
 
 import com.gk.snake.logic.domain.Direction;
 import com.gk.snake.logic.domain.GameState;
-import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.domain.XY;
-import com.gk.snake.logic.rules.CrashedIntoItselfCheck;
+import com.gk.snake.logic.domain.snake.CrashedIntoItselfCheck;
+import com.gk.snake.logic.domain.snake.Snake;
+import com.gk.snake.logic.domain.snake.SnakeDirectionUpdater;
+import com.gk.snake.logic.domain.snake.SnakePositionUpdater;
 
 import java.util.ArrayList;
 

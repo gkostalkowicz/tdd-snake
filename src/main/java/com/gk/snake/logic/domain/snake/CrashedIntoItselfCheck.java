@@ -1,4 +1,4 @@
-package com.gk.snake.logic.rules;
+package com.gk.snake.logic.domain.snake;
 
 import com.gk.snake.logic.domain.XY;
 
@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO move into appropriate package
 public class CrashedIntoItselfCheck {
 
     public boolean hasCrashedIntoItself(List<XY> body) {

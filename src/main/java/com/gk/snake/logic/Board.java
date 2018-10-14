@@ -23,19 +23,19 @@ public class Board {
         // TODO return playing/game over flag
 
         if (state.getApplePosition() == null) {
-            state = new GameState(state.getSnake(), positionGenerator.generatePosition());
+            state = state.withApplePosition(positionGenerator.generatePosition());
         }
 
         Snake.UpdateResult updateResult = state.getSnake().updateForNextFrame(keyStroke, state.getApplePosition());
         if (updateResult.isAppleEaten()) {
-            state = new GameState(state.getSnake(), null);
+            state = state.withApplePosition(null);
         }
         if (updateResult.isCrashedIntoItself()) {
-            state = new GameState(state.getSnake(), state.getApplePosition(), GameStatus.GAME_OVER);
+            state = state.withGameStatus(GameStatus.GAME_OVER);
         }
 
         if (crashedIntoWallCheck.hasSnakeCrashedIntoWall(state.getSnake().getBody())) {
-            state = new GameState(state.getSnake(), state.getApplePosition(), GameStatus.GAME_OVER);
+            state = state.withGameStatus(GameStatus.GAME_OVER);
         }
     }
 }

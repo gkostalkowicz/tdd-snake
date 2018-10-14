@@ -5,17 +5,13 @@ import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.GameStatus;
 import com.gk.snake.logic.domain.Snake;
 import com.gk.snake.logic.rules.CrashedIntoWallCheck;
-import com.gk.snake.logic.rules.GameRule;
 import com.gk.snake.logic.rules.PositionGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-
 @AllArgsConstructor
 public class Board {
 
-    private final List<GameRule> gameRules;
     private final CrashedIntoWallCheck crashedIntoWallCheck;
     private final PositionGenerator positionGenerator;
 
@@ -40,10 +36,6 @@ public class Board {
 
         if (crashedIntoWallCheck.hasSnakeCrashedIntoWall(state.getSnake().getBody())) {
             state = new GameState(state.getSnake(), state.getApplePosition(), GameStatus.GAME_OVER);
-        }
-
-        for (GameRule gameRule : gameRules) {
-            state = gameRule.calculateNextState(state, keyStroke);
         }
     }
 }

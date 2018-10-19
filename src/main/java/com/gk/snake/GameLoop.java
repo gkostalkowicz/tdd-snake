@@ -1,6 +1,7 @@
 package com.gk.snake;
 
 import com.gk.snake.logic.Board;
+import com.gk.snake.logic.domain.GameStatus;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -33,6 +34,9 @@ public class GameLoop {
                 finished = true;
             } else {
                 board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
+                if (board.getState().getGameStatus() == GameStatus.GAME_OVER) {
+                    throw new RuntimeException("Game over!"); // TODO display a game over banner
+                }
                 renderer.render(board.getState());
                 timer.waitOneFrame();
             }

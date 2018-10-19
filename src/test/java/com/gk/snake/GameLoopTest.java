@@ -69,6 +69,7 @@ public class GameLoopTest {
 
         // given:
         when(screenMock.pollInput()).thenReturn(null, new KeyStroke(KeyType.Escape));
+        when(boardMock.getState()).thenReturn(new GameState(null, null)); // TODO remove
 
         // when:
         loop.start();
@@ -105,6 +106,7 @@ public class GameLoopTest {
 
         // given:
         when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.ArrowLeft), new KeyStroke(KeyType.Escape));
+        when(boardMock.getState()).thenReturn(new GameState(null, null)); // TODO remove
 
         // when:
         loop.start();
@@ -118,6 +120,7 @@ public class GameLoopTest {
 
         // given:
         when(screenMock.pollInput()).thenReturn(null, new KeyStroke(KeyType.Escape));
+        when(boardMock.getState()).thenReturn(new GameState(null, null)); // TODO remove
 
         // when:
         loop.start();

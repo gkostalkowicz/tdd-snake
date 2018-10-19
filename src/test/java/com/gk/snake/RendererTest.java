@@ -10,9 +10,13 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 
+import static com.googlecode.lanterna.TextColor.ANSI.*;
 import static org.mockito.Mockito.*;
 
 public class RendererTest {
+
+    private static final TextCharacter SNAKE_CHARACTER = new TextCharacter('#', GREEN, DEFAULT);
+    private static final TextCharacter APPLE_CHARACTER = new TextCharacter('@', RED, DEFAULT);
 
     private Screen screenMock = mock(Screen.class);
     private Renderer renderer = new Renderer(screenMock);
@@ -41,7 +45,7 @@ public class RendererTest {
         renderer.render(new GameState(createSnake(List.of()), new XY(10, 15)));
 
         // then:
-        verify(screenMock).setCharacter(10, 15, new TextCharacter('*'));
+        verify(screenMock).setCharacter(10, 15, APPLE_CHARACTER);
     }
 
     @Test
@@ -50,8 +54,8 @@ public class RendererTest {
         renderer.render(new GameState(createSnake(List.of(new XY(3, 4), new XY(5, 6))), null));
 
         // then:
-        verify(screenMock).setCharacter(3, 4, new TextCharacter('#'));
-        verify(screenMock).setCharacter(5, 6, new TextCharacter('#'));
+        verify(screenMock).setCharacter(3, 4, SNAKE_CHARACTER);
+        verify(screenMock).setCharacter(5, 6, SNAKE_CHARACTER);
     }
 
     @Test

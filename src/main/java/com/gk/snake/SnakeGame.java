@@ -31,9 +31,10 @@ public class SnakeGame {
     }
 
     private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {
-        GameState initialState = new InitialStateCalculator().getInitialState(boardWidth, boardHeight,
+        PositionGenerator positionGenerator = new PositionGenerator(boardWidth, boardHeight, new Random());
+        GameState initialState = new InitialStateCalculator(positionGenerator).getInitialState(boardWidth, boardHeight,
                 new SnakeDirectionUpdater(), new SnakePositionUpdater(), new SnakeCrashIntoItselfCheck());
         return new Board(new SnakeCrashIntoWallCheck(boardWidth, boardHeight),
-                new PositionGenerator(boardWidth, boardHeight, new Random()), initialState);
+                positionGenerator, initialState);
     }
 }

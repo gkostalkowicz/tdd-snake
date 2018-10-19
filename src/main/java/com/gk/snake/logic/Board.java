@@ -19,13 +19,9 @@ public class Board {
     public void processNextFrame(KeyStroke keyStroke) {
         // TODO return playing/game over flag
 
-        if (state.getApplePosition() == null) {
-            state = state.withApplePosition(positionGenerator.generatePosition());
-        }
-
         Snake.UpdateResult updateResult = state.getSnake().updateForNextFrame(keyStroke, state.getApplePosition());
         if (updateResult.isAppleEaten()) {
-            state = state.withApplePosition(null);
+            state = state.withApplePosition(positionGenerator.generatePosition());
         }
         if (updateResult.isCrashedIntoItself()) {
             state = state.withGameStatus(GameStatus.GAME_OVER);

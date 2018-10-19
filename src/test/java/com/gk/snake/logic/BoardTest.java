@@ -10,51 +10,9 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 public class BoardTest {
-
-    // -------------------
-    // generating apple
-
-    @Test
-    public void givenNoApple_whenProcessNextFrame_thenAnAppleIsGenerated() {
-
-        // given
-        XY currentApplePosition = null;
-
-        PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
-        when(positionGeneratorStub.generatePosition())
-                .thenReturn(new XY(10, 20));
-
-        Board board = new BoardBuilder()
-                .applePosition(currentApplePosition)
-                .positionGenerator(positionGeneratorStub)
-                .build();
-
-        // when
-        board.processNextFrame(null);
-
-        // then
-        assertEquals(new XY(10, 20), board.getState().getApplePosition());
-    }
-
-    @Test
-    public void givenExistingApple_whenProcessNextFrame_thenAppleStays() {
-
-        // given
-        Board board = new BoardBuilder()
-                .applePosition(new XY(20, 30))
-                .positionGenerator(mock(PositionGenerator.class))
-                .build();
-
-        // when
-        board.processNextFrame(null);
-
-        // then
-        assertEquals(new XY(20, 30), board.getState().getApplePosition());
-    }
 
     // -------------------
     // updating snake
@@ -80,25 +38,29 @@ public class BoardTest {
     // eating apple
 
     @Test
-    public void givenThatAppleIsEaten_whenProcessNextFrame_thenAppleIsRemoved() {
+    public void givenThatAppleIsEaten_whenProcessNextFrame_thenAppleIsGeneratedInNewPosition() {
 
         // given
-        XY currentApplePosition = new XY(10, 20);
+        XY currentApplePosition = new XY(1, 2);
 
         Snake snakeStub = mock(Snake.class);
         when(snakeStub.updateForNextFrame(any(), any()))
                 .thenReturn(snakeUpdateResultWithAppleEaten(true));
+        PositionGenerator positionGeneratorStub = mock(PositionGenerator.class);
+        when(positionGeneratorStub.generatePosition())
+                .thenReturn(new XY(5, 6));
 
         Board board = new BoardBuilder()
                 .applePosition(currentApplePosition)
                 .snakeStub(snakeStub)
+                .positionGenerator(positionGeneratorStub)
                 .build();
 
         // when
         board.processNextFrame(null);
 
         // then
-        assertNull(board.getState().getApplePosition());
+        assertEquals(new XY(5, 6), board.getState().getApplePosition());
     }
 
     @Test

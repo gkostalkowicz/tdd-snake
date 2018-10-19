@@ -9,13 +9,12 @@ import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-public class SnakeLoop {
+public class GameLoop {
 
     private final Screen screen;
-
     private final Timer timer;
-
     private final Board board;
+    private final Renderer renderer;
 
     public void start() throws IOException {
         screen.startScreen();
@@ -35,7 +34,7 @@ public class SnakeLoop {
             } else {
                 if (keyStroke != null) {
                     board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
-                    // TODO render returned state
+                    renderer.render(board.getState());
                 }
                 timer.waitOneFrame();
             }

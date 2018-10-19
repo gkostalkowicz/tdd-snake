@@ -26,8 +26,8 @@ public class SnakeGame {
 
         Board board = createGameLogicProcessor(boardHeight, boardWidth);
 
-        SnakeLoop snakeLoop = new SnakeLoop(screen, new Timer(), board);
-        snakeLoop.start();
+        GameLoop gameLoop = new GameLoop(screen, new Timer(), board, new Renderer(screen));
+        gameLoop.start();
     }
 
     private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {

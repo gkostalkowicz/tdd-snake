@@ -1,6 +1,7 @@
 package com.gk.snake;
 
 import com.gk.snake.logic.Board;
+import com.gk.snake.logic.domain.GameState;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -11,12 +12,13 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
-public class SnakeLoopTest {
+public class GameLoopTest {
 
     private Screen screenMock;
     private Timer timerMock;
     private Board boardMock;
-    private SnakeLoop game;
+    private Renderer rendererMock;
+    private GameLoop loop;
 
     @Before
     public void setUp() {
@@ -24,65 +26,96 @@ public class SnakeLoopTest {
         screenMock = mock(Screen.class);
         timerMock = mock(Timer.class);
         boardMock = mock(Board.class);
-        game = new SnakeLoop(screenMock, timerMock, boardMock);
+        rendererMock = mock(Renderer.class);
+        loop = new GameLoop(screenMock, timerMock, boardMock, rendererMock);
     }
 
     @Test
-    public void testScreenStarted() throws IOException {
+    public void whenStart_thenScreenIsStarted() throws IOException {
 
+        // given:
         when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.Escape));
 
-        game.start();
+        // when:
+        loop.start();
 
+        // then:
         verify(screenMock).startScreen();
     }
 
     @Test
-    public void testEscKeyPressed() throws IOException {
+    public void givenEscKeyPressInFirstFrame_whenStart_thenDoNotWaitAndStopScreen() throws IOException {
 
+        // given:
         when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.Escape));
 
-        game.start();
+        // when:
+        loop.start();
 
+        // then:
         verify(screenMock).pollInput();
         verify(timerMock, times(0)).waitOneFrame();
         verify(screenMock).stopScreen();
     }
 
     @Test
-    public void testNoKeyPressedThenEscKeyPressed() throws IOException {
+    public void givenEscKeyPressInSecondFrame_whenStart_thenWaitOneFrameAndStopScreen() throws IOException {
 
+        // given:
         when(screenMock.pollInput()).thenReturn(null, new KeyStroke(KeyType.Escape));
 
-        game.start();
+        // when:
+        loop.start();
 
+        // then:
         verify(screenMock, times(2)).pollInput();
         verify(timerMock).waitOneFrame();
         verify(screenMock).stopScreen();
     }
 
     @Test
-    public void testScreenIsStoppedWhenExceptionIsThrownFromGameLogicProcessor() throws IOException {
+    public void givenThatExceptionIsThrownFromGameLogicProcessor_whenStart_thenScreenIsStopped() throws IOException {
 
+        // given:
         when(screenMock.pollInput()).thenReturn(null, new KeyStroke(KeyType.Escape));
         doThrow(new RuntimeException()).when(timerMock).waitOneFrame();
 
+        // when:
         try {
-            game.start();
+            loop.start();
         } catch (RuntimeException e) {
             // ignore
         }
 
+        // then:
         verify(screenMock).stopScreen();
     }
 
     @Test
-    public void testKeyStrokesAreSentToGameEngine() throws IOException {
+    public void givenKeyStrokes_whenStart_thenProcessNextFrameIsCalledOnBoardWithPressedKeys() throws IOException {
 
+        // given:
         when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.ArrowLeft), new KeyStroke(KeyType.Escape));
 
-        game.start();
+        // when:
+        loop.start();
 
+        // then:
         verify(boardMock).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
+    }
+
+    @Test
+    public void givenSomeGameState_whenStart_thenGameStateIsRendered() throws IOException {
+
+        // given:
+        when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.ArrowLeft), new KeyStroke(KeyType.Escape));
+        GameState gameState = new GameState(null, null);
+        when(boardMock.getState()).thenReturn(gameState);
+
+        // when:
+        loop.start();
+
+        // then:
+        verify(rendererMock).render(gameState);
     }
 }

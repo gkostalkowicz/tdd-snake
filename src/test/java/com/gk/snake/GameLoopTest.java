@@ -30,6 +30,9 @@ public class GameLoopTest {
         loop = new GameLoop(screenMock, timerMock, boardMock, rendererMock);
     }
 
+    // -------------------
+    // starting screen
+
     @Test
     public void whenStart_thenScreenIsStarted() throws IOException {
 
@@ -42,6 +45,9 @@ public class GameLoopTest {
         // then:
         verify(screenMock).startScreen();
     }
+
+    // -------------------
+    // waiting and stopping screen
 
     @Test
     public void givenEscKeyPressInFirstFrame_whenStart_thenDoNotWaitAndStopScreen() throws IOException {
@@ -91,8 +97,11 @@ public class GameLoopTest {
         verify(screenMock).stopScreen();
     }
 
+    // -------------------
+    // key strokes
+
     @Test
-    public void givenKeyStrokes_whenStart_thenProcessNextFrameIsCalledOnBoardWithPressedKeys() throws IOException {
+    public void givenKeyStroke_whenStart_thenProcessNextFrameIsCalledOnBoardWithPressedKeys() throws IOException {
 
         // given:
         when(screenMock.pollInput()).thenReturn(new KeyStroke(KeyType.ArrowLeft), new KeyStroke(KeyType.Escape));
@@ -103,6 +112,22 @@ public class GameLoopTest {
         // then:
         verify(boardMock).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
     }
+
+    @Test
+    public void givenNoKeyStroke_whenStart_thenProcessNextFrameIsCalledOnBoardWithNullKeyStroke() throws IOException {
+
+        // given:
+        when(screenMock.pollInput()).thenReturn(null, new KeyStroke(KeyType.Escape));
+
+        // when:
+        loop.start();
+
+        // then:
+        verify(boardMock).processNextFrame(null);
+    }
+
+    // -------------------
+    // rendering
 
     @Test
     public void givenSomeGameState_whenStart_thenGameStateIsRendered() throws IOException {

@@ -33,6 +33,11 @@ public class KeyStrokeTest {
         assertNull(keyStrokeOf(KeyType.Enter));
     }
 
+    @Test
+    public void noKeyPressed() {
+        assertNull(KeyStroke.of(null));
+    }
+
     private KeyStroke keyStrokeOf(KeyType keyType) {
         return KeyStroke.of(new com.googlecode.lanterna.input.KeyStroke(keyType));
     }

@@ -18,7 +18,7 @@ public enum KeyStroke {
     }
 
     public static KeyStroke of(com.googlecode.lanterna.input.KeyStroke keyStroke) {
-        if (keyStroke.getKeyType() == null) {
+        if (keyStroke == null) {
             return null;
         } else {
             return KEY_TYPE_TO_KEY_STROKE.get(keyStroke.getKeyType());

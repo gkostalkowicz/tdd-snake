@@ -32,10 +32,8 @@ public class GameLoop {
             if (keyStroke != null && keyStroke.getKeyType() == KeyType.Escape) {
                 finished = true;
             } else {
-                if (keyStroke != null) {
-                    board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
-                    renderer.render(board.getState());
-                }
+                board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
+                renderer.render(board.getState());
                 timer.waitOneFrame();
             }
         }

@@ -8,16 +8,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GameState {
 
-    private final Snake snake;
+    // TODO make GameState mutable
+
+    private final Snake snake; // caution - this class is mutable!
     private final XY applePosition;
     private final GameStatus gameStatus;
 
     public GameState(Snake snake, XY applePosition) {
         this(snake, applePosition, GameStatus.PLAYING);
-    }
-
-    public GameState withSnake(Snake snake) {
-        return new GameState(snake, applePosition, gameStatus);
     }
 
     public GameState withApplePosition(XY applePosition) {

@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 public class Snake {
 
-    // TODO make immutable
     private List<XY> body;
     private Direction direction;
     private final SnakeDirectionUpdater snakeDirectionUpdater;

@@ -1,4 +1,4 @@
-package com.gk.snake;
+package com.gk.snake.loop;
 
 import com.googlecode.lanterna.screen.Screen;
 import org.junit.Test;

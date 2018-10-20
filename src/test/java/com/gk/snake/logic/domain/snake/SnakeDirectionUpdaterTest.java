@@ -1,6 +1,6 @@
 package com.gk.snake.logic.domain.snake;
 
-import com.gk.snake.KeyStroke;
+import com.gk.snake.input.KeyStroke;
 import com.gk.snake.logic.domain.Direction;
 import org.junit.Test;
 

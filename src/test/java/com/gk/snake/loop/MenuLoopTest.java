@@ -1,5 +1,7 @@
-package com.gk.snake;
+package com.gk.snake.loop;
 
+import com.gk.snake.input.InputReader;
+import com.gk.snake.input.KeyStroke;
 import org.junit.Test;
 
 import java.io.IOException;

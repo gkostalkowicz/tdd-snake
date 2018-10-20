@@ -1,6 +1,6 @@
 package com.gk.snake.logic;
 
-import com.gk.snake.KeyStroke;
+import com.gk.snake.input.KeyStroke;
 import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.GameStatus;
 import com.gk.snake.logic.domain.XY;

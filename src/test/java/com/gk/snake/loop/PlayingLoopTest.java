@@ -1,9 +1,9 @@
-package com.gk.snake;
+package com.gk.snake.loop;
 
-import com.gk.snake.PlayingLoop.FinishCause;
 import com.gk.snake.logic.Board;
 import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.GameStatus;
+import com.gk.snake.loop.PlayingLoop.FinishCause;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -79,7 +79,7 @@ public class PlayingLoopTest {
         loop.start();
 
         // then:
-        verify(boardMock).processNextFrame(com.gk.snake.KeyStroke.LEFT_ARROW);
+        verify(boardMock).processNextFrame(com.gk.snake.input.KeyStroke.LEFT_ARROW);
     }
 
     @Test

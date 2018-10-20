@@ -1,4 +1,4 @@
-package com.gk.snake;
+package com.gk.snake.loop;
 
 import com.gk.snake.logic.Board;
 import com.gk.snake.logic.domain.GameStatus;
@@ -32,7 +32,7 @@ public class PlayingLoop {
                 finishCause = FinishCause.USER_QUIT;
 
             } else {
-                board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
+                board.processNextFrame(com.gk.snake.input.KeyStroke.of(keyStroke));
                 if (board.getState().getGameStatus() == GameStatus.GAME_OVER) {
                     finishCause = FinishCause.PLAYER_DIED;
                 }

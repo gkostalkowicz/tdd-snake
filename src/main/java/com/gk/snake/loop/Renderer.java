@@ -1,4 +1,4 @@
-package com.gk.snake;
+package com.gk.snake.loop;
 
 import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.XY;

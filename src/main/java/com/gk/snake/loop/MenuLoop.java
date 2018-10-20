@@ -1,6 +1,8 @@
-package com.gk.snake;
+package com.gk.snake.loop;
 
-import com.gk.snake.PlayingLoop.FinishCause;
+import com.gk.snake.input.InputReader;
+import com.gk.snake.input.KeyStroke;
+import com.gk.snake.loop.PlayingLoop.FinishCause;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;

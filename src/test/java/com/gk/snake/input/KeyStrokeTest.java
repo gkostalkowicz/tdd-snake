@@ -1,4 +1,4 @@
-package com.gk.snake;
+package com.gk.snake.input;
 
 import com.googlecode.lanterna.input.KeyType;
 import com.tngtech.java.junit.dataprovider.DataProvider;

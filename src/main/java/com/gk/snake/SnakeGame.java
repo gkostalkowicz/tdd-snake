@@ -1,5 +1,6 @@
 package com.gk.snake;
 
+import com.gk.snake.input.InputReader;
 import com.gk.snake.logic.Board;
 import com.gk.snake.logic.InitialStateCalculator;
 import com.gk.snake.logic.PositionGenerator;
@@ -8,6 +9,7 @@ import com.gk.snake.logic.domain.GameState;
 import com.gk.snake.logic.domain.snake.SnakeCrashIntoItselfCheck;
 import com.gk.snake.logic.domain.snake.SnakeDirectionUpdater;
 import com.gk.snake.logic.domain.snake.SnakePositionUpdater;
+import com.gk.snake.loop.*;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;

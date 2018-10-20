@@ -20,6 +20,7 @@ public class KeyStrokeTest {
                 {KeyType.ArrowRight, KeyStroke.RIGHT_ARROW},
                 {KeyType.ArrowUp, KeyStroke.UP_ARROW},
                 {KeyType.ArrowDown, KeyStroke.DOWN_ARROW},
+                {KeyType.Escape, KeyStroke.ESCAPE},
                 {KeyType.Enter, KeyStroke.UNKNOWN_KEY}
         };
     }

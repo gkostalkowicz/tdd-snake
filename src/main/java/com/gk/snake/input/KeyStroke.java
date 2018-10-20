@@ -16,6 +16,7 @@ public enum KeyStroke {
         KEY_TYPE_TO_KEY_STROKE.put(KeyType.ArrowRight, RIGHT_ARROW);
         KEY_TYPE_TO_KEY_STROKE.put(KeyType.ArrowUp, UP_ARROW);
         KEY_TYPE_TO_KEY_STROKE.put(KeyType.ArrowDown, DOWN_ARROW);
+        KEY_TYPE_TO_KEY_STROKE.put(KeyType.Escape, ESCAPE);
     }
 
     public static KeyStroke of(com.googlecode.lanterna.input.KeyStroke keyStroke) {

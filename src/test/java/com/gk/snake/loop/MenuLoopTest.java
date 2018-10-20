@@ -76,6 +76,22 @@ public class MenuLoopTest {
         verifyZeroInteractions(gameOverBannerRendererMock);
     }
 
+    @Test
+    public void givenThatPlayingLoopIsFinishedBecauseUserQuits_whenStart_thenLoopIsFinished()
+            throws IOException {
+        // given:
+        GameOverBannerRenderer gameOverBannerRendererMock = mock(GameOverBannerRenderer.class);
+        PlayingLoop playingLoopStub = mock(PlayingLoop.class);
+        when(playingLoopStub.start())
+                .thenReturn(PlayingLoop.FinishCause.USER_QUIT);
+        MenuLoop menuLoop = new MenuLoop(playingLoopStub, mock(InputReader.class), gameOverBannerRendererMock);
+
+        // when:
+        menuLoop.start();
+
+        // then loop is finished
+    }
+
     private InputReader createInputReaderReturningEscapeKeyStroke() throws IOException {
         return createInputReaderReturningKeyStrokes(KeyStroke.ESCAPE);
     }

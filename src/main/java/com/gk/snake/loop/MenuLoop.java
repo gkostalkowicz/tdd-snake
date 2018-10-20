@@ -15,11 +15,12 @@ public class MenuLoop {
     private final GameOverBannerRenderer gameOverBannerRenderer;
 
     public void start() throws IOException {
+        FinishCause finishCause;
         do {
-            FinishCause finishCause = playingLoop.start();
+            finishCause = playingLoop.start();
             if (finishCause == FinishCause.PLAYER_DIED) {
                 gameOverBannerRenderer.renderGameOverBanner();
             }
-        } while (inputReader.readKey() != KeyStroke.ESCAPE);
+        } while (finishCause != FinishCause.USER_QUIT && inputReader.readKey() != KeyStroke.ESCAPE);
     }
 }

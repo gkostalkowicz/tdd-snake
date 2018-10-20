@@ -2,10 +2,13 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'application'
+
 group 'com.gk'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.10
+mainClassName = 'com.gk.snake.SnakeGame'
 
 repositories {
     mavenCentral()

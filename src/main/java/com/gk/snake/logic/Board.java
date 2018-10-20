@@ -17,10 +17,9 @@ public class Board {
     private GameState state;
 
     public void processNextFrame(KeyStroke keyStroke) {
-        // TODO return playing/game over flag
-
         Snake.UpdateResult updateResult = state.getSnake().updateForNextFrame(keyStroke, state.getApplePosition());
         if (updateResult.isAppleEaten()) {
+            // TODO ensure apple is not generated on the snake
             state = state.withApplePosition(positionGenerator.generatePosition());
         }
         if (updateResult.isCrashedIntoItself()) {

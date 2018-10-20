@@ -1,10 +1,9 @@
 package com.gk.snake.loop;
 
+import com.gk.snake.input.InputReader;
+import com.gk.snake.input.KeyStroke;
 import com.gk.snake.logic.Board;
 import com.gk.snake.logic.domain.GameStatus;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class PlayingLoop {
 
-    private final Screen screen;
+    private final InputReader inputReader;
     private final Timer timer;
     private final Supplier<Board> boardSupplier;
     private final Renderer renderer;
@@ -27,14 +26,13 @@ public class PlayingLoop {
         FinishCause finishCause = null;
 
         while (finishCause == null) {
-            // TODO use InputReader
-            KeyStroke keyStroke = screen.pollInput();
+            KeyStroke keyStroke = inputReader.pollKey();
 
-            if (keyStroke != null && keyStroke.getKeyType() == KeyType.Escape) {
+            if (keyStroke == KeyStroke.ESCAPE) {
                 finishCause = FinishCause.USER_QUIT;
 
             } else {
-                board.processNextFrame(com.gk.snake.input.KeyStroke.of(keyStroke));
+                board.processNextFrame(keyStroke);
                 if (board.getState().getGameStatus() == GameStatus.GAME_OVER) {
                     finishCause = FinishCause.PLAYER_DIED;
                 }

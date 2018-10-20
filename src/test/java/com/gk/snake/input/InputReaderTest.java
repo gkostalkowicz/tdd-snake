@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class InputReaderTest {
 
     @Test
-    public void whenReadKey_thenReadKeyIsCalledOnScreen() throws IOException {
+    public void whenReadKey_thenReadInputIsCalledOnInputProvider() throws IOException {
         // given:
         InputProvider inputProviderMock = mock(InputProvider.class);
         InputReader inputReader = new InputReader(inputProviderMock);
@@ -33,6 +33,33 @@ public class InputReaderTest {
 
         // when:
         KeyStroke keyStroke = inputReader.readKey();
+
+        // then:
+        assertEquals(KeyStroke.LEFT_ARROW, keyStroke);
+    }
+
+    @Test
+    public void whenPollKey_thenPollInputIsCalledOnInputProvider() throws IOException {
+        // given:
+        InputProvider inputProviderMock = mock(InputProvider.class);
+        InputReader inputReader = new InputReader(inputProviderMock);
+
+        // when:
+        inputReader.pollKey();
+
+        // then:
+        verify(inputProviderMock).pollInput();
+    }
+
+    @Test
+    public void givenLeftArrowKeyPress_whenPollKey_thenLeftArrowKeyStrokeIsReturned() throws IOException {
+        // given:
+        InputProvider inputProviderStub = mock(InputProvider.class);
+        when(inputProviderStub.pollInput()).thenReturn(new com.googlecode.lanterna.input.KeyStroke(KeyType.ArrowLeft));
+        InputReader inputReader = new InputReader(inputProviderStub);
+
+        // when:
+        KeyStroke keyStroke = inputReader.pollKey();
 
         // then:
         assertEquals(KeyStroke.LEFT_ARROW, keyStroke);

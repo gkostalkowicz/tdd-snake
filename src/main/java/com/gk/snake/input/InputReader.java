@@ -10,6 +10,10 @@ public class InputReader {
 
     private final InputProvider inputProvider;
 
+    public KeyStroke pollKey() throws IOException {
+        return KeyStroke.of(inputProvider.pollInput());
+    }
+
     public KeyStroke readKey() throws IOException {
         return KeyStroke.of(inputProvider.readInput());
     }

@@ -15,5 +15,6 @@ dependencies {
     compile 'com.googlecode.lanterna:lanterna:3.0.1'
     compile 'org.projectlombok:lombok:1.18.2'
     testCompile 'junit:junit:4.12'
+    testCompile 'com.tngtech.java:junit-dataprovider:1.10.0'
     testCompile 'org.mockito:mockito-core:2.22.0'
 }

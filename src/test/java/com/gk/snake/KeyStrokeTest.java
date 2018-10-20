@@ -1,44 +1,53 @@
 package com.gk.snake;
 
 import com.googlecode.lanterna.input.KeyType;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+@RunWith(DataProviderRunner.class)
 public class KeyStrokeTest {
 
-    @Test
-    public void leftArrow() {
-        assertEquals(KeyStroke.LEFT_ARROW, keyStrokeOf(KeyType.ArrowLeft));
+    @DataProvider
+    public static Object[][] keyStrokeDataProvider() {
+        return new Object[][] {
+                {KeyType.ArrowLeft, KeyStroke.LEFT_ARROW},
+                {KeyType.ArrowRight, KeyStroke.RIGHT_ARROW},
+                {KeyType.ArrowUp, KeyStroke.UP_ARROW},
+                {KeyType.ArrowDown, KeyStroke.DOWN_ARROW},
+                {KeyType.Enter, KeyStroke.UNKNOWN_KEY}
+        };
     }
 
     @Test
-    public void rightArrow() {
-        assertEquals(KeyStroke.RIGHT_ARROW, keyStrokeOf(KeyType.ArrowRight));
+    @UseDataProvider("keyStrokeDataProvider")
+    public void givenALibraryKeyStroke_whenFactoryMethodIsCalled_thenCorrespondingSnakeKeyStrokeIsReturned(
+            KeyType libraryKeyType, KeyStroke expectedKeyStroke) {
+        // given:
+        com.googlecode.lanterna.input.KeyStroke libraryKeyStroke =
+                new com.googlecode.lanterna.input.KeyStroke(libraryKeyType);
+
+        // when:
+        KeyStroke keyStroke = KeyStroke.of(libraryKeyStroke);
+
+        // then:
+        assertEquals(expectedKeyStroke, keyStroke);
     }
 
     @Test
-    public void upArrow() {
-        assertEquals(KeyStroke.UP_ARROW, keyStrokeOf(KeyType.ArrowUp));
-    }
+    public void givenNoKeyStroke_whenFactoryMethodIsCalled_thenNullIsReturned() {
+        // given:
+        com.googlecode.lanterna.input.KeyStroke libraryKeyStroke = null;
 
-    @Test
-    public void downArrow() {
-        assertEquals(KeyStroke.DOWN_ARROW, keyStrokeOf(KeyType.ArrowDown));
-    }
+        // when:
+        KeyStroke keyStroke = KeyStroke.of(libraryKeyStroke);
 
-    @Test
-    public void unknownKey() {
-        assertNull(keyStrokeOf(KeyType.Enter));
-    }
-
-    @Test
-    public void noKeyPressed() {
-        assertNull(KeyStroke.of(null));
-    }
-
-    private KeyStroke keyStrokeOf(KeyType keyType) {
-        return KeyStroke.of(new com.googlecode.lanterna.input.KeyStroke(keyType));
+        // then:
+        assertNull(keyStroke);
     }
 }

@@ -10,36 +10,36 @@ import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-public class GameLoop {
+public class PlayingLoop {
 
     private final Screen screen;
     private final Timer timer;
     private final Board board;
     private final Renderer renderer;
 
-    public void start() throws IOException {
-        screen.startScreen();
-        try {
-            loop();
-        } finally {
-            screen.stopScreen();
-        }
+    public enum FinishCause {
+        PLAYER_DIED, USER_QUIT
     }
 
-    private void loop() throws IOException {
-        boolean finished = false;
-        while (!finished) {
+    public FinishCause start() throws IOException {
+        FinishCause finishCause = null;
+
+        while (finishCause == null) {
+            // TODO use InputReader
             KeyStroke keyStroke = screen.pollInput();
+
             if (keyStroke != null && keyStroke.getKeyType() == KeyType.Escape) {
-                finished = true;
+                finishCause = FinishCause.USER_QUIT;
+
             } else {
                 board.processNextFrame(com.gk.snake.KeyStroke.of(keyStroke));
                 if (board.getState().getGameStatus() == GameStatus.GAME_OVER) {
-                    throw new RuntimeException("Game over!"); // TODO display a game over banner
+                    finishCause = FinishCause.PLAYER_DIED;
                 }
                 renderer.render(board.getState());
                 timer.waitOneFrame();
             }
         }
+        return finishCause;
     }
 }

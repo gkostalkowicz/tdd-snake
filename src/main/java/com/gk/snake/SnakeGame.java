@@ -23,19 +23,22 @@ public class SnakeGame {
         Screen screen = new DefaultTerminalFactory().createScreen();
         TerminalSize terminalSize = screen.getTerminalSize();
 
-        int boardHeight = terminalSize.getRows();
         int boardWidth = terminalSize.getColumns();
+        int boardHeight = terminalSize.getRows();
 
-        Board board = createGameLogicProcessor(boardHeight, boardWidth);
+        Board board = createGameLogicProcessor(boardWidth, boardHeight);
+
+        MessageRenderer messageRenderer = new MessageRenderer(screen, boardWidth, boardHeight);
+        GameOverBannerRenderer gameOverBannerRenderer = new GameOverBannerRenderer(messageRenderer, screen);
 
         PlayingLoop playingLoop = new PlayingLoop(screen, new Timer(), board, new Renderer(screen));
-        MenuLoop menuLoop = new MenuLoop(playingLoop, new InputReader(screen), new GameOverBannerRenderer());
+        MenuLoop menuLoop = new MenuLoop(playingLoop, new InputReader(screen), gameOverBannerRenderer);
         GameManager gameManager = new GameManager(menuLoop, screen);
 
         gameManager.play();
     }
 
-    private static Board createGameLogicProcessor(int boardHeight, int boardWidth) {
+    private static Board createGameLogicProcessor(int boardWidth, int boardHeight) {
         PositionGenerator positionGenerator = new PositionGenerator(boardWidth, boardHeight, new Random());
         GameState initialState = new InitialStateCalculator(positionGenerator).getInitialState(boardWidth, boardHeight,
                 new SnakeDirectionUpdater(), new SnakePositionUpdater(), new SnakeCrashIntoItselfCheck());

@@ -36,6 +36,7 @@ public class SnakeGame {
         MenuLoop menuLoop = new MenuLoop(playingLoop, inputReader, gameOverBannerRenderer);
         GameManager gameManager = new GameManager(menuLoop, screen);
 
+        System.out.println("Starting Snake...");
         gameManager.play();
     }
 

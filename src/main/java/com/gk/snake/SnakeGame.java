@@ -16,6 +16,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class SnakeGame {
 
@@ -26,19 +27,20 @@ public class SnakeGame {
         int boardWidth = terminalSize.getColumns();
         int boardHeight = terminalSize.getRows();
 
-        Board board = createGameLogicProcessor(boardWidth, boardHeight);
+        Board board = createBoard(boardWidth, boardHeight);
 
         MessageRenderer messageRenderer = new MessageRenderer(screen, boardWidth, boardHeight);
         GameOverBannerRenderer gameOverBannerRenderer = new GameOverBannerRenderer(messageRenderer, screen);
 
-        PlayingLoop playingLoop = new PlayingLoop(screen, new Timer(), board, new Renderer(screen));
+        Supplier<Board> boardSupplier = () -> SnakeGame.createBoard(boardWidth, boardHeight);
+        PlayingLoop playingLoop = new PlayingLoop(screen, new Timer(), boardSupplier, new Renderer(screen));
         MenuLoop menuLoop = new MenuLoop(playingLoop, new InputReader(screen), gameOverBannerRenderer);
         GameManager gameManager = new GameManager(menuLoop, screen);
 
         gameManager.play();
     }
 
-    private static Board createGameLogicProcessor(int boardWidth, int boardHeight) {
+    private static Board createBoard(int boardWidth, int boardHeight) {
         PositionGenerator positionGenerator = new PositionGenerator(boardWidth, boardHeight, new Random());
         GameState initialState = new InitialStateCalculator(positionGenerator).getInitialState(boardWidth, boardHeight,
                 new SnakeDirectionUpdater(), new SnakePositionUpdater(), new SnakeCrashIntoItselfCheck());

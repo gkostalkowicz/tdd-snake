@@ -30,7 +30,7 @@ public class PlayingLoopTest {
         timerMock = mock(Timer.class);
         boardMock = mock(Board.class);
         rendererMock = mock(Renderer.class);
-        loop = new PlayingLoop(screenMock, timerMock, boardMock, rendererMock);
+        loop = new PlayingLoop(screenMock, timerMock, () -> boardMock, rendererMock);
     }
 
     // -------------------

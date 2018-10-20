@@ -8,13 +8,14 @@ import com.googlecode.lanterna.screen.Screen;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 public class PlayingLoop {
 
     private final Screen screen;
     private final Timer timer;
-    private final Board board;
+    private final Supplier<Board> boardSupplier;
     private final Renderer renderer;
 
     public enum FinishCause {
@@ -22,6 +23,7 @@ public class PlayingLoop {
     }
 
     public FinishCause start() throws IOException {
+        Board board = boardSupplier.get();
         FinishCause finishCause = null;
 
         while (finishCause == null) {
